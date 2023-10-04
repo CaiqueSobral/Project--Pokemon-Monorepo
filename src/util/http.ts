@@ -12,7 +12,9 @@ export async function getAllPokemons() {
       );
       const pokemon = new Pokemon(
         pokemonData.id,
-        pokemonData.name,
+        (pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1))
+          .replace('n-f', 'n ♀')
+          .replace('n-m', 'n ♂'),
         `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.name}.png`,
         pokemonData.types,
       );
