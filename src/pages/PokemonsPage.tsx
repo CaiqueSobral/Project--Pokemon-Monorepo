@@ -18,13 +18,13 @@ export default function PokemonsPage() {
 
   return (
     <SafeAreaView className="flex-1 px-2">
-      <View className="flex-1">
+      <View className="flex-1 items-center">
         <FlatList
           data={pokemons}
-          numColumns={2}
+          numColumns={3}
           keyExtractor={(item) => String(item.id)}
-          columnWrapperStyle={{ justifyContent: 'space-between' }}
-          className="flex-1 pt-4"
+          columnWrapperStyle={{ justifyContent: 'space-around' }}
+          className="flex-1 pt-4 w-[95%]"
           renderItem={(item) => {
             return (
               <PokemonCard
