@@ -8,6 +8,14 @@ export interface PokemonData {
 export interface PokemonInterface {
   id: number;
   name: string;
+  height: number;
+  weight: number;
   sprite: string;
-  types: Array<any>;
+  captureRate: number;
+  evolutionChainId: number;
+  types: Array<PokemonTypes>;
+}
+
+interface PokemonTypes {
+  name: string;
 }

@@ -1,12 +1,12 @@
+import { PokemonInterface } from '@/interfaces/Pokemon';
 import PokemonCard from '../components/Pokedex/PokedexPokemonCard';
-import { Pokemon } from '../models/Pokemon';
 import { getAllPokemons } from '../util/http';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function PokemonsPage() {
-  const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
+  const [pokemons, setPokemons] = useState<Array<PokemonInterface>>([]);
   useEffect(() => {
     async function getPokemons() {
       const allPokemons = await getAllPokemons();
