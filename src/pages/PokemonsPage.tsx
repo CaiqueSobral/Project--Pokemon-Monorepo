@@ -26,13 +26,7 @@ export default function PokemonsPage() {
           columnWrapperStyle={{ justifyContent: 'space-around' }}
           className="flex-1 pt-4 w-[95%]"
           renderItem={(item) => {
-            return (
-              <PokemonCard
-                id={item.item.id}
-                name={item.item.name}
-                url={item.item.sprite}
-              />
-            );
+            return <PokemonCard name={item.item.name} url={item.item.sprite} />;
           }}
         />
       </View>

@@ -10,6 +10,7 @@ export async function getAllPokemons() {
       const pokemonData = await getPokemon(
         response.data.pokemon_species[item].url,
       );
+      //console.log(pokemonData);
       const pokemon = new Pokemon(
         pokemonData.id,
         (pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1))

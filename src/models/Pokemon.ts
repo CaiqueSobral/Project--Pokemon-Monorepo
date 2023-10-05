@@ -1,5 +1,6 @@
 import { ImageProps } from 'react-native';
 import { PokemonInterface } from '../interfaces/Pokemon';
+import { getAllPokemons } from '@/util/http';
 
 export class Pokemon implements PokemonInterface {
   id: number;
