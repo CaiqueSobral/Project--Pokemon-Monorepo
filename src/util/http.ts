@@ -56,8 +56,8 @@ export async function getAllPokemons() {
             .slice(1)
             .replace('n-f', 'n ♀')
             .replace('n-m', 'n ♂'),
-        height: pokemonData.pokemon[0].height,
-        weight: pokemonData.pokemon[0].weight,
+        height: pokemonData.pokemon[0].height * 10,
+        weight: pokemonData.pokemon[0].weight / 10,
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
         captureRate: pokemonData.pokemon[0].capture_rate,
         evolutionChainId: pokemonData.pokemon[0].evolution_chain_id,
