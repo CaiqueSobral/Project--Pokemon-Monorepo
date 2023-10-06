@@ -27,7 +27,7 @@ export default function AnimatedPokedexButton({ children }: PropsWithChildren) {
   return (
     <AnimatedPressable
       style={animatedStyle}
-      className="h-full h-full bg-white border-4"
+      className="h-full w-full bg-white border-4"
       onPressIn={() => (translateValue.value = 4)}
       onPressOut={() => (translateValue.value = 0)}
     >
