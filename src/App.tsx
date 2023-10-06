@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { registerRootComponent } from 'expo';
-import PokemonsPage from './pages/PokemonsPage';
+import PokedexPage from './pages/PokedexPage';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -34,7 +34,7 @@ export function App() {
   return (
     <PokemonsContextProvider>
       <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
-        <PokemonsPage />
+        <PokedexPage />
       </SafeAreaProvider>
     </PokemonsContextProvider>
   );

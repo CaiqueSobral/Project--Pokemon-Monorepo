@@ -5,7 +5,7 @@ import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 
-export default function PokemonsPage() {
+export default function PokedexPage() {
   const pokemons = [] as Array<PokemonInterface>;
   const pokemonsContext = useContext(PokemonsContext);
 
