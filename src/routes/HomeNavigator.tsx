@@ -5,12 +5,31 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  DrawerScreenProps,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
+import { FONTSTART2P } from '../data/constants';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 type StackParamList = {
   HomePage: undefined;
   PokedexPage: undefined;
 };
+
+type DrawerParamList = {
+  HomeDrawer: NavigatorScreenParams<StackParamList>;
+  PokeDexDrawer: undefined;
+};
+
+export type NavigationScreensProps = CompositeScreenProps<
+  StackScreenProps<StackParamList>,
+  DrawerScreenProps<DrawerParamList>
+>;
 
 export type HomePageScreenProps = NativeStackScreenProps<
   StackParamList,
@@ -22,13 +41,35 @@ export type PokedexPageScreenProps = NativeStackScreenProps<
   'PokedexPage'
 >;
 
-const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator<DrawerParamList>();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="HomeDrawer"
+    >
+      <Drawer.Screen name="HomeDrawer" component={HomePage} />
+      <Drawer.Screen
+        options={{ title: 'Pokédex', headerTitleStyle: FONTSTART2P }}
+        name="PokeDexDrawer"
+        component={PokedexPage}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function HomeStackNavigator() {
   return (
-    <Stack.Navigator initialRouteName="HomePage">
-      <Stack.Screen name="HomePage" component={HomePage}></Stack.Screen>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animation: 'slide_from_right',
+      }}
+    >
+      <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen name="PokedexPage" component={PokedexPage}></Stack.Screen>
     </Stack.Navigator>
   );
