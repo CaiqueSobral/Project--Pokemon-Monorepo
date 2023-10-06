@@ -1,12 +1,14 @@
+import 'react-native-gesture-handler';
 import { useCallback, useContext } from 'react';
 import { registerRootComponent } from 'expo';
-import PokedexPage from './pages/PokedexPage';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import PokemonsContextProvider, {
   PokemonsContext,
 } from './data/context/pokemonsContext';
+import RootNavigator from './routes';
+import { NavigationContainer } from '@react-navigation/native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,9 +35,11 @@ export function App() {
 
   return (
     <PokemonsContextProvider>
-      <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
-        <PokedexPage />
-      </SafeAreaProvider>
+      <NavigationContainer>
+        <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
+          <RootNavigator />
+        </SafeAreaProvider>
+      </NavigationContainer>
     </PokemonsContextProvider>
   );
 }
