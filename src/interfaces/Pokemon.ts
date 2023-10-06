@@ -8,3 +8,13 @@ export interface PokemonInterface {
   evolutionChainId: number;
   types: Array<string>;
 }
+
+export interface EvolutionChainInterface {
+  id: number;
+  species: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
+}

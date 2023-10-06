@@ -1,4 +1,7 @@
-import { PokemonInterface } from '../interfaces/Pokemon';
+import {
+  EvolutionChainInterface,
+  PokemonInterface,
+} from '../interfaces/Pokemon';
 import axios from 'axios';
 
 const query = `query getPokemonsGen1 {
@@ -33,6 +36,9 @@ const headers = {
   'X-Method-Used': 'graphiql',
 };
 
+const pokemons: Array<PokemonInterface> = [];
+const evolutions: Array<EvolutionChainInterface> = [];
+
 export async function getAllPokemons() {
   const {
     data: {
@@ -42,8 +48,33 @@ export async function getAllPokemons() {
     headers: headers,
     query: query,
   });
-  const pokemons: Array<PokemonInterface> = [];
 
+  arrangePokemonData(gen_1);
+  arrangeEvolutionData(evolution_chain);
+
+  return {
+    pokemons: pokemons,
+    evolutions: evolutions,
+  };
+}
+
+function arrangeEvolutionData(evolution_chain: any) {
+  try {
+    for (const item in evolution_chain) {
+      const evolutionData = evolution_chain[item];
+
+      const evolutionChain: EvolutionChainInterface = {
+        id: evolutionData.id,
+        species: evolutionData.species,
+      };
+      evolutions.push(evolutionChain);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function arrangePokemonData(gen_1: any) {
   try {
     for (const item in gen_1[0].pokemons) {
       const pokemonData = gen_1[0].pokemons[item];
@@ -68,5 +99,4 @@ export async function getAllPokemons() {
   } catch (e) {
     console.log(e);
   }
-  return pokemons.sort((a, b) => a.id - b.id);
 }

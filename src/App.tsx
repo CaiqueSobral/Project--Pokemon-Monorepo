@@ -1,9 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { registerRootComponent } from 'expo';
 import PokemonsPage from './pages/PokemonsPage';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import PokemonsContextProvider, {
+  PokemonsContext,
+} from './data/context/pokemonsContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,7 +15,13 @@ export function App() {
     PressStart2P: require('../assets/Fonts/PressStart2P-Regular.ttf'),
   });
 
+  const pokemonsContext = useContext(PokemonsContext);
+
   const onLayoutRootView = useCallback(async () => {
+    if (!pokemonsContext.pokemons.length) {
+      pokemonsContext.getData();
+    }
+
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
@@ -23,9 +32,11 @@ export function App() {
   }
 
   return (
-    <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
-      <PokemonsPage />
-    </SafeAreaProvider>
+    <PokemonsContextProvider>
+      <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
+        <PokemonsPage />
+      </SafeAreaProvider>
+    </PokemonsContextProvider>
   );
 }
 

@@ -1,20 +1,20 @@
-import { PokemonInterface } from '@/interfaces/Pokemon';
+import { PokemonInterface } from '../interfaces/Pokemon';
 import PokemonCard from '../components/Pokedex/PokedexPokemonCard';
-import { getAllPokemons } from '../util/http';
-import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { PokemonsContext } from '../data/context/pokemonsContext';
 
 export default function PokemonsPage() {
-  const [pokemons, setPokemons] = useState<Array<PokemonInterface>>([]);
-  useEffect(() => {
-    async function getPokemons() {
-      const allPokemons = await getAllPokemons();
-      setPokemons(allPokemons);
-    }
+  const pokemons = [] as Array<PokemonInterface>;
+  const pokemonsContext = useContext(PokemonsContext);
 
-    getPokemons();
-  }, []);
+  if (!pokemonsContext.pokemons.length) {
+    pokemonsContext.getData();
+    pokemons.push(...pokemonsContext.pokemons);
+  } else {
+    pokemons.push(...pokemonsContext.pokemons);
+  }
 
   return (
     <SafeAreaView className="flex-1 px-2">
