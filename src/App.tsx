@@ -20,10 +20,6 @@ export function App() {
   const pokemonsContext = useContext(PokemonsContext);
 
   const onLayoutRootView = useCallback(async () => {
-    if (!pokemonsContext.pokemons.length) {
-      pokemonsContext.getData();
-    }
-
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
@@ -31,6 +27,10 @@ export function App() {
 
   if (!fontsLoaded) {
     return null;
+  }
+
+  if (!pokemonsContext.pokemons.length) {
+    pokemonsContext.getData();
   }
 
   return (
