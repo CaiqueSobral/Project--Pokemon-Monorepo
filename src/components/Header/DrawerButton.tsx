@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
