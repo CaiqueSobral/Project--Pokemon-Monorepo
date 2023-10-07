@@ -40,6 +40,7 @@ const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
 
 export async function getAllPokemons() {
+  console.info('Getting Pokemons...');
   const {
     data: {
       data: { gen_1, evolution_chain },
@@ -52,6 +53,7 @@ export async function getAllPokemons() {
   arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
 
+  console.info('Pokemons loaded...');
   return {
     pokemons: pokemons,
     evolutions: evolutions,
@@ -92,7 +94,9 @@ function arrangePokemonData(gen_1: any) {
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
         captureRate: pokemonData.pokemon[0].capture_rate,
         evolutionChainId: pokemonData.pokemon[0].evolution_chain_id,
-        types: pokemonData.pokemon[0].types.map((e: any) => e.type.name),
+        types: pokemonData.pokemon[0].types.map(
+          (e: { type: { name: string } }) => e.type.name,
+        ),
       };
       pokemons.push(pokemon);
     }

@@ -17,8 +17,6 @@ export function App() {
     PressStart2P: require('../assets/Fonts/PressStart2P-Regular.ttf'),
   });
 
-  const pokemonsContext = useContext(PokemonsContext);
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -27,10 +25,6 @@ export function App() {
 
   if (!fontsLoaded) {
     return null;
-  }
-
-  if (!pokemonsContext.pokemons.length) {
-    pokemonsContext.getData();
   }
 
   return (

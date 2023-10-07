@@ -2,13 +2,13 @@ import {
   EvolutionChainInterface,
   PokemonInterface,
 } from '../../interfaces/Pokemon';
-import { getAllPokemons } from '../../util/http';
+import { getAllPokemons } from '../../util/httpPokemons';
 import { PropsWithChildren, createContext, useState } from 'react';
 
 export const PokemonsContext = createContext({
   pokemons: [] as Array<PokemonInterface>,
   evolutionChain: [] as Array<EvolutionChainInterface>,
-  getData: () => {},
+  getData: async () => {},
 });
 
 export default function PokemonsContextProvider({
@@ -20,7 +20,7 @@ export default function PokemonsContextProvider({
   >([]);
 
   const getData = async () => {
-    if (!pokemons.length && !evolutionChain.length) {
+    if (pokemons.length === 0 || evolutionChain.length === 0) {
       const pokeTemp = await getAllPokemons();
       setPokemons(pokeTemp.pokemons);
       setEvolutionChain(pokeTemp.evolutions);
