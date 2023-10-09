@@ -15,8 +15,10 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
+import LoginPage from '../pages/LoginPage';
 
 type StackParamList = {
+  LoginPage: undefined;
   HomePage: undefined;
   PokedexPage: undefined;
 };
@@ -26,9 +28,9 @@ type DrawerParamList = {
   PokeDexDrawer: undefined;
 };
 
-export type NavigationScreensProps = CompositeScreenProps<
-  StackScreenProps<StackParamList>,
-  DrawerScreenProps<DrawerParamList>
+export type LoginPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'LoginPage'
 >;
 
 export type HomePageScreenProps = NativeStackScreenProps<
@@ -41,14 +43,16 @@ export type PokedexPageScreenProps = NativeStackScreenProps<
   'PokedexPage'
 >;
 
+export type NavigationScreensProps = CompositeScreenProps<
+  StackScreenProps<StackParamList>,
+  DrawerScreenProps<DrawerParamList>
+>;
+
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="HomeDrawer"
-    >
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen name="HomeDrawer" component={HomePage} />
       <Drawer.Screen
         options={{ title: 'Pokédex', headerTitleStyle: FONTSTART2P }}
@@ -68,7 +72,9 @@ export default function HomeStackNavigator() {
         headerShown: false,
         animation: 'slide_from_right',
       }}
+      initialRouteName="HomePage"
     >
+      <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen name="PokedexPage" component={PokedexPage}></Stack.Screen>
     </Stack.Navigator>
