@@ -92,6 +92,7 @@ function arrangePokemonData(gen_1: any) {
         height: pokemonData.pokemon[0].height * 10,
         weight: pokemonData.pokemon[0].weight / 10,
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
+        sprite3d: `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
         captureRate: pokemonData.pokemon[0].capture_rate,
         evolutionChainId: pokemonData.pokemon[0].evolution_chain_id,
         types: pokemonData.pokemon[0].types.map(

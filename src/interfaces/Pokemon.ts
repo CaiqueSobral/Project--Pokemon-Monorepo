@@ -4,6 +4,7 @@ export interface PokemonInterface {
   height: number;
   weight: number;
   sprite: string;
+  sprite3d: string;
   captureRate: number;
   evolutionChainId: number;
   types: Array<string>;
