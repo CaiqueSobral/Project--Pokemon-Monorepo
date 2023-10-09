@@ -1,14 +1,14 @@
 import 'react-native-gesture-handler';
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { registerRootComponent } from 'expo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import PokemonsContextProvider, {
-  PokemonsContext,
-} from './data/context/pokemonsContext';
+import PokemonsContextProvider from './data/context/pokemonsContext';
 import RootNavigator from './routes';
 import { NavigationContainer } from '@react-navigation/native';
+import WeatherContextProvider from './data/context/weatherContext';
+import IndexContextProvider from './data/context/IndexContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,13 +28,13 @@ export function App() {
   }
 
   return (
-    <PokemonsContextProvider>
+    <IndexContextProvider>
       <NavigationContainer>
         <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
           <RootNavigator />
         </SafeAreaProvider>
       </NavigationContainer>
-    </PokemonsContextProvider>
+    </IndexContextProvider>
   );
 }
 
