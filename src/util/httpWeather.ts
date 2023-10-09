@@ -12,7 +12,7 @@ export async function getWeatherData(coords: Array<number>) {
     },
   });
 
-  console.log(data);
+  console.log('Getting Weather Information...');
 
   const weather: WeatherInterface = {
     location: {
@@ -31,5 +31,6 @@ export async function getWeatherData(coords: Array<number>) {
     },
   };
 
+  console.log('Weather Information Loaded!');
   return weather;
 }

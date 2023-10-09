@@ -40,7 +40,7 @@ const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
 
 export async function getAllPokemons() {
-  console.info('Getting Pokemons...');
+  console.log('Getting Pokemons...');
   const {
     data: {
       data: { gen_1, evolution_chain },
@@ -53,7 +53,7 @@ export async function getAllPokemons() {
   arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
 
-  console.info('Pokemons loaded...');
+  console.log('Pokemons loaded!');
   return {
     pokemons: pokemons,
     evolutions: evolutions,
