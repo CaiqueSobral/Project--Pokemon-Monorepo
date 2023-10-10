@@ -20,8 +20,8 @@ export async function getWeatherData(coords: Array<number>) {
       country: data.location.country,
     },
     weather: {
-      tempC: Math.floor(data.current.temp_c) + ' °C',
-      tempF: Math.floor(data.current.temp_f) + ' °F',
+      tempC: '' + Math.floor(data.current.temp_c),
+      tempF: '' + Math.floor(data.current.temp_f),
       isDay: data.current.is_day === 1,
       condition: {
         text: data.current.condition.text,

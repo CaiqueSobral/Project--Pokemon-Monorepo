@@ -72,7 +72,7 @@ export default function HomeStackNavigator() {
         headerShown: false,
         animation: 'slide_from_right',
       }}
-      initialRouteName="HomePage"
+      initialRouteName="LoginPage"
     >
       <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
