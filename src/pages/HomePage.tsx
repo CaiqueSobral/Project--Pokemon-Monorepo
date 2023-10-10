@@ -9,16 +9,20 @@ import WeatherView from '../components/HomePage/WeatherView';
 
 export default function HomePage({ navigation }: NavigationScreensProps) {
   const weatherContext = useContext(WeatherContext);
+
+  const dayOfWeek = new Date()
+    .toLocaleString('en-us', { weekday: 'long' })
+    .split(',')[0];
   return (
     <SafeAreaView className="flex-1 mt-2 bg-white">
       <Header title="" openDrawer={navigation.openDrawer} />
       <View className="flex-1 m-4 items-center">
         <HomeHeader />
-        <WeatherView />
-        <Text>{`Welcome from`}</Text>
-        <Pressable onPress={navigation.openDrawer}>
-          <Text>Open Drawer</Text>
-        </Pressable>
+        <WeatherView
+          temp={weatherContext.currentWeather.weather.tempC}
+          city={weatherContext.currentWeather.location.name}
+          day={dayOfWeek}
+        />
       </View>
     </SafeAreaView>
   );
