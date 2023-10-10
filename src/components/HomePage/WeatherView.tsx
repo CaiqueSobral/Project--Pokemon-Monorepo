@@ -17,7 +17,7 @@ export default function WeatherView() {
           <View className="flex-1">
             <Image
               source={{
-                uri: 'https://piskel-imgstore-b.appspot.com/img/710d6bd7-671d-11ee-8b06-176710959793.gif',
+                uri: 'https://piskel-imgstore-b.appspot.com/img/58c5b830-6722-11ee-a8ad-176710959793.gif',
               }}
               resizeMode="contain"
               className="h-full w-full"
@@ -27,9 +27,7 @@ export default function WeatherView() {
         <View className="w-full items-center justify-center">
           <View className="w-full mt-2 items-center flex-row justify-center">
             <Image
-              source={{
-                uri: 'https://cdn-icons-png.flaticon.com/512/64/64113.png',
-              }}
+              source={require('../../../assets/icons/location_icon.png')}
               resizeMode="contain"
               className="h-3 w-3 mr-1"
             />
