@@ -2,7 +2,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header/Header';
 import { NavigationScreensProps } from '../routes/HomeNavigator';
 import React, { useContext } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { WeatherContext } from '../data/context/weatherContext';
 import HomeHeader from '../components/HomePage/HomeHeader';
 import WeatherView from '../components/HomePage/WeatherView';
@@ -22,6 +22,7 @@ export default function HomePage({ navigation }: NavigationScreensProps) {
           temp={weatherContext.currentWeather.weather.tempC}
           city={weatherContext.currentWeather.location.name}
           day={dayOfWeek}
+          icon={{ uri: weatherContext.currentWeather.weather.condition.icon }}
         />
       </View>
     </SafeAreaView>

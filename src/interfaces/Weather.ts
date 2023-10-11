@@ -8,7 +8,6 @@ export interface WeatherInterface {
     tempF: string;
     isDay: boolean;
     condition: {
-      text: string;
       icon: string;
       code: number;
     };

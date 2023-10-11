@@ -1,12 +1,12 @@
-import { FONTSTART2P } from '../../data/constants';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 
 type Props = {
   temp: string;
   city: string;
   day: string;
+  icon: { uri: string };
 };
 export default function WeatherView(props: Props) {
   return (
@@ -21,9 +21,7 @@ export default function WeatherView(props: Props) {
           </View>
           <View className="flex-1">
             <Image
-              source={{
-                uri: 'https://piskel-imgstore-b.appspot.com/img/58c5b830-6722-11ee-a8ad-176710959793.gif',
-              }}
+              source={props.icon}
               resizeMode="contain"
               className="h-[80%] w-[80%] self-center"
             />
