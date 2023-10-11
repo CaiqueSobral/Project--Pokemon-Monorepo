@@ -18,7 +18,7 @@ export default function WeatherView(props: Props) {
           <View className="flex-1 flex-row items-center px-4">
             <View className="flex-1 flex-col">
               <View className="flex-1 pt-[12] justify-center items-center flex-row">
-                <PrimaryText classname={'text-5xl'} text={props.temp} />
+                <PrimaryText classname={'text-4xl'} text={props.temp} />
                 <PrimaryText classname={'text-2xl'} text={'°C'} />
               </View>
             </View>

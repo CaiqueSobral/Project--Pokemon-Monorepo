@@ -1,5 +1,6 @@
 import {
   EvolutionChainInterface,
+  HabitatInterface,
   PokemonInterface,
 } from '../interfaces/Pokemon';
 import axios from 'axios';
@@ -20,6 +21,9 @@ const query = `query getPokemonsGen1 {
       }
       capture_rate
       evolution_chain_id
+      habitat: pokemon_v2_pokemonhabitat {
+        name
+      }
     }
   }
   evolution_chain: pokemon_v2_evolutionchain(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {
@@ -28,6 +32,10 @@ const query = `query getPokemonsGen1 {
       name
       id
     }
+  }
+  habitats: pokemon_v2_pokemonhabitat(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {
+    name
+    id
   }
 }`;
 
@@ -38,12 +46,13 @@ const headers = {
 
 const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
+const habitats: Array<HabitatInterface> = [];
 
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
   const {
     data: {
-      data: { gen_1, evolution_chain },
+      data: { gen_1, evolution_chain, habitats },
     },
   } = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
     headers: headers,
@@ -52,12 +61,31 @@ export async function getAllPokemons() {
 
   arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
+  arrangeHabitatsData(habitats);
 
   console.log('Pokemons loaded!');
   return {
     pokemons: pokemons,
     evolutions: evolutions,
+    habitats: habitats,
   };
+}
+
+function arrangeHabitatsData(habitatsData: any) {
+  try {
+    for (const item in habitatsData) {
+      const habitatData = habitatsData[item];
+
+      const habitat: HabitatInterface = {
+        name: habitatData.name,
+        id: habitatData.id,
+      };
+
+      habitats.push(habitat);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function arrangeEvolutionData(evolution_chain: any) {
@@ -93,8 +121,9 @@ function arrangePokemonData(gen_1: any) {
         weight: pokemonData.pokemon[0].weight / 10,
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
         sprite3d: `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
-        captureRate: pokemonData.pokemon[0].capture_rate,
-        evolutionChainId: pokemonData.pokemon[0].evolution_chain_id,
+        captureRate: pokemonData.capture_rate,
+        evolutionChainId: pokemonData.evolution_chain_id,
+        habitat: pokemonData.habitat.name,
         types: pokemonData.pokemon[0].types.map(
           (e: { type: { name: string } }) => e.type.name,
         ),

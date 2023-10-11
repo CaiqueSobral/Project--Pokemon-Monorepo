@@ -7,6 +7,7 @@ export interface PokemonInterface {
   sprite3d: string;
   captureRate: number;
   evolutionChainId: number;
+  habitat: string;
   types: Array<string>;
 }
 
@@ -18,4 +19,9 @@ export interface EvolutionChainInterface {
       name: string;
     },
   ];
+}
+
+export interface HabitatInterface {
+  name: string;
+  id: number;
 }

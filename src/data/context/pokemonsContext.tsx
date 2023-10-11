@@ -1,5 +1,6 @@
 import {
   EvolutionChainInterface,
+  HabitatInterface,
   PokemonInterface,
 } from '../../interfaces/Pokemon';
 import { getAllPokemons } from '../../util/httpPokemons';
@@ -8,6 +9,7 @@ import { PropsWithChildren, createContext, useState } from 'react';
 export const PokemonsContext = createContext({
   pokemons: [] as Array<PokemonInterface>,
   evolutionChain: [] as Array<EvolutionChainInterface>,
+  habitats: [] as Array<HabitatInterface>,
   getData: async () => {},
 });
 
@@ -18,17 +20,25 @@ export default function PokemonsContextProvider({
   const [evolutionChain, setEvolutionChain] = useState<
     Array<EvolutionChainInterface>
   >([]);
+  const [habitats, setHabitats] = useState<Array<HabitatInterface>>([]);
 
   const getData = async () => {
-    if (pokemons.length === 0 || evolutionChain.length === 0) {
+    if (
+      pokemons.length === 0 ||
+      evolutionChain.length === 0 ||
+      habitats.length === 0
+    ) {
       const pokeTemp = await getAllPokemons();
       setPokemons(pokeTemp.pokemons);
       setEvolutionChain(pokeTemp.evolutions);
+      setHabitats(pokeTemp.habitats);
     }
   };
 
   return (
-    <PokemonsContext.Provider value={{ pokemons, evolutionChain, getData }}>
+    <PokemonsContext.Provider
+      value={{ pokemons, evolutionChain, habitats, getData }}
+    >
       {children}
     </PokemonsContext.Provider>
   );
