@@ -29,9 +29,12 @@ export default function HomePage({ navigation }: NavigationScreensProps) {
           icon={{ uri: weatherContext.currentWeather.weather.condition.icon }}
         />
         <View className="flex-1 w-full h-full justify-center items-center my-4">
-          {buttons.map((button) => {
+          {buttons.map((button, i) => {
             return (
-              <View className="flex-1 w-full items-center justify-center">
+              <View
+                key={i}
+                className="flex-1 w-full items-center justify-center"
+              >
                 <PrimaryButton text={button} />
               </View>
             );

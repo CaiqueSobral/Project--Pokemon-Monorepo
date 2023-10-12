@@ -14,7 +14,7 @@ const weatherConditions = {
   cloudy: {
     codes: [1006, 1003],
     dayDiff: true,
-    icon: [weatherIcons.clear_Day, weatherIcons.cloudy_Night],
+    icon: [weatherIcons.cloudy_Day, weatherIcons.cloudy_Night],
   },
   overcast: {
     codes: [1009, 1030, 1063, 1066, 1069, 1072],
@@ -67,6 +67,7 @@ export async function getWeatherData(coords: Array<number>) {
   });
 
   console.log('Getting Weather Information...');
+  console.log(data);
 
   const weather: WeatherInterface = {
     location: {
