@@ -3,6 +3,7 @@ import { Pressable, View } from 'react-native';
 import PrimaryText from './PrimaryText';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
+import Custom8BitBorders from './Custom8BitBorders';
 
 type Props = {
   text?: string;
@@ -46,10 +47,7 @@ export default function PrimaryButton(props: Props) {
           />
         )}
       </View>
-      <View className="absolute w-full h-full -z-50">
-        <View className="absolute w-[100%] h-[124%] bg-black -z-50 -top-[12%]"></View>
-        <View className="absolute w-[104%] h-[100%] bg-black -z-50 -left-[2%]"></View>
-      </View>
+      <Custom8BitBorders />
       <Animated.View
         style={animatedBottomShadow}
         className="absolute w-full h-1 bg-blue-700"

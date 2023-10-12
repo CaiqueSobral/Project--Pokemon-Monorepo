@@ -4,6 +4,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import Custom8BitBorders from '../Custom/Custom8BitBorders';
 
 type Props = {
   openDrawer: () => void;
@@ -40,8 +41,7 @@ export default function DrawerButton(props: Props) {
           />
         </View>
       </View>
-      <View className="absolute bg-black h-[28px] w-[34px] -z-50 self-center"></View>
-      <View className="absolute bg-black h-[34px] w-[28px] -z-50 -top-[3px]"></View>
+      <Custom8BitBorders />
       <Animated.View
         style={rightShadowAnim}
         className="absolute h-full w-[3px] right-0 bg-blue-700"
