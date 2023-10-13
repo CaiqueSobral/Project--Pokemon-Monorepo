@@ -37,7 +37,7 @@ const weatherConditions = {
     icon: [weatherIcons.light_rain],
   },
   heavyRain: {
-    codes: [1195, 1192, 1273, 1276, 1087, 1273, 1087],
+    codes: [1195, 1192, 1273, 1276, 1087, 1087],
     dayDiff: false,
     icon: [weatherIcons.heavy_rain],
   },
@@ -52,7 +52,7 @@ const weatherConditions = {
     icon: [weatherIcons.light_snow],
   },
   torrentialRain: {
-    codes: [1246, 1276, 1243, 1201],
+    codes: [1246, 1243, 1201],
     dayDiff: false,
     icon: [weatherIcons.torrential_rain],
   },
@@ -67,7 +67,6 @@ export async function getWeatherData(coords: Array<number>) {
   });
 
   console.log('Getting Weather Information...');
-  console.log(data);
 
   const weather: WeatherInterface = {
     location: {
@@ -93,7 +92,7 @@ function setIcon(isDay: boolean, code: number): string {
   let key: keyof typeof weatherConditions;
   for (key in weatherConditions) {
     if (weatherConditions[key].codes.includes(code)) {
-      if (weatherConditions[key].codes) {
+      if (weatherConditions[key].dayDiff) {
         return isDay
           ? weatherConditions[key].icon[0]
           : weatherConditions[key].icon[1];
