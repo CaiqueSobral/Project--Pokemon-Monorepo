@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
-import ContainerWithTitle from '../Custom/ContainerWithTitle';
+import ContainerWithTitle from '../Custom/ContainerRoundedBorders';
 
 type Props = {
   temp: string;
