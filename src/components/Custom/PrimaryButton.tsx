@@ -8,6 +8,7 @@ import Custom8BitBorders from './Custom8BitBorders';
 type Props = {
   text?: string;
   icon?: string;
+  onPress?: () => void;
 };
 export default function PrimaryButton(props: Props) {
   const buttonIsPressed = useSharedValue(0);
@@ -31,6 +32,7 @@ export default function PrimaryButton(props: Props) {
   return (
     <Pressable
       className="w-[95%] h-full max-h-12"
+      onPress={props.onPress}
       onPressIn={() => (buttonIsPressed.value = 1)}
       onPressOut={() => (buttonIsPressed.value = 0)}
     >
