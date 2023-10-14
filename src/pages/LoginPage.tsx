@@ -1,9 +1,13 @@
 import { useContext } from 'react';
 import { LoginPageScreenProps } from '../routes/HomeNavigator';
-import { Pressable, Text, View } from 'react-native';
+import { Dimensions, Image, Text, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { WeatherContext } from '../data/context/weatherContext';
 import * as Location from 'expo-location';
+import PrimaryButton from '../components/Custom/PrimaryButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Carousel from 'react-native-reanimated-carousel';
+import { Easing } from 'react-native-reanimated';
 
 export default function LoginPage({ navigation }: LoginPageScreenProps) {
   const pokemonContext = useContext(PokemonsContext);
@@ -37,12 +41,60 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
     navigation.navigate('HomePage');
   };
 
+  const images = [
+    require('../../assets/home/WalkingBottom.gif'),
+    require('../../assets/home/pikachuWalking.gif'),
+  ];
+
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text>Login Page</Text>
-      <Pressable className="h-28 w-48 bg-blue-500" onPress={() => loadApp()}>
-        <Text className="text-5xl">Login</Text>
-      </Pressable>
-    </View>
+    <SafeAreaView className="flex-1 p-4">
+      <View className="flex-1">
+        <View className="flex-1">
+          <Image
+            source={require('../../assets/home/banner-home.png')}
+            resizeMode="contain"
+            className="h-full w-full"
+          />
+        </View>
+      </View>
+      <View className="flex justify-end h-[30%] w-full">
+        <View className="h-[30%] items-center w-full">
+          <PrimaryButton text="Login" onPress={loadApp} />
+        </View>
+        <View className="h-[30%] items-center w-full">
+          <PrimaryButton text="Register" />
+        </View>
+        <View className="absolute h-[256] w-full items-center bottom-[60%]">
+          <Carousel
+            width={Dimensions.get('screen').width}
+            data={images}
+            autoPlay={true}
+            autoPlayReverse={true}
+            autoPlayInterval={0}
+            pagingEnabled={false}
+            snapEnabled={false}
+            enabled={false}
+            withAnimation={{
+              type: 'timing',
+              config: {
+                easing: Easing.linear,
+                duration: 6000,
+              },
+            }}
+            renderItem={(item) => {
+              return (
+                <View className="h-[256] w-[256]">
+                  <Image
+                    source={item.item}
+                    resizeMode="contain"
+                    className="w-full h-full bottom-1"
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
