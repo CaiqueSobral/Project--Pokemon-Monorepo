@@ -6,12 +6,13 @@ import AnimatedPokedexButton from './AnimatedPokedexCard';
 type Props = {
   name: string;
   url: string;
+  onPress: () => void;
 };
 export default function PokemonCard(props: Props) {
   return (
     <>
       <View className="w-[30%] h-32 mb-6">
-        <AnimatedPokedexButton>
+        <AnimatedPokedexButton onPress={props.onPress}>
           <View className="flex-1 justify-center">
             <View className="h-[100%] w-auto">
               <Image

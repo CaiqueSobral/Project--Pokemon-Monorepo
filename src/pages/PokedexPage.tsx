@@ -24,7 +24,15 @@ export default function PokedexPage({ navigation }: NavigationScreensProps) {
           columnWrapperStyle={{ justifyContent: 'space-around' }}
           className="flex-1 w-[95%]"
           renderItem={(item) => {
-            return <PokemonCard name={item.item.name} url={item.item.sprite} />;
+            return (
+              <PokemonCard
+                name={item.item.name}
+                url={item.item.sprite}
+                onPress={() =>
+                  navigation.navigate('PokemonDexPage', { pokemon: item.item })
+                }
+              />
+            );
           }}
         />
       </View>
