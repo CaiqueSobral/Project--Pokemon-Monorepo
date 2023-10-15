@@ -16,11 +16,14 @@ import {
 } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import LoginPage from '../pages/LoginPage';
+import { PokemonInterface } from '../interfaces/Pokemon';
+import PokemonDexPage from '../pages/PokemonDexPage';
 
 type StackParamList = {
   LoginPage: undefined;
   HomePage: undefined;
   PokedexPage: undefined;
+  PokemonDexPage: { pokemon: PokemonInterface };
 };
 
 type DrawerParamList = {
@@ -41,6 +44,11 @@ export type HomePageScreenProps = NativeStackScreenProps<
 export type PokedexPageScreenProps = NativeStackScreenProps<
   StackParamList,
   'PokedexPage'
+>;
+
+export type PokemonDexPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'PokemonDexPage'
 >;
 
 export type NavigationScreensProps = CompositeScreenProps<
@@ -77,6 +85,10 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen name="PokedexPage" component={PokedexPage}></Stack.Screen>
+      <Stack.Screen
+        name="PokemonDexPage"
+        component={PokemonDexPage}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 }
