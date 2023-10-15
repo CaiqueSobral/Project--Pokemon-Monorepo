@@ -1,3 +1,4 @@
+import { Image } from 'react-native';
 import {
   EvolutionChainInterface,
   HabitatInterface,
@@ -59,7 +60,7 @@ export async function getAllPokemons() {
     query: query,
   });
 
-  arrangePokemonData(gen_1);
+  await arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
   arrangeHabitatsData(habitats);
 
@@ -104,7 +105,7 @@ function arrangeEvolutionData(evolution_chain: any) {
   }
 }
 
-function arrangePokemonData(gen_1: any) {
+async function arrangePokemonData(gen_1: any) {
   try {
     for (const item in gen_1[0].pokemons) {
       const pokemonData = gen_1[0].pokemons[item];
@@ -120,7 +121,11 @@ function arrangePokemonData(gen_1: any) {
         height: pokemonData.pokemon[0].height * 10,
         weight: pokemonData.pokemon[0].weight / 10,
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
-        sprite3d: `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
+        sprite3d: {
+          uri: `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
+          height: 0,
+          width: 0,
+        },
         captureRate: pokemonData.capture_rate,
         evolutionChainId: pokemonData.evolution_chain_id,
         habitat: pokemonData.habitat.name,
@@ -128,6 +133,13 @@ function arrangePokemonData(gen_1: any) {
           (e: { type: { name: string } }) => e.type.name,
         ),
       };
+      await Image.getSize(
+        `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
+        (w, h) => {
+          pokemon.sprite3d.width = w;
+          pokemon.sprite3d.height = h;
+        },
+      );
       pokemons.push(pokemon);
     }
   } catch (e) {
