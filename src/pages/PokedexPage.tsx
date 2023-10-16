@@ -14,7 +14,7 @@ export default function PokedexPage({ navigation }: NavigationScreensProps) {
   }
 
   return (
-    <SafeAreaView className="flex-1 mt-2 bg-white">
+    <SafeAreaView className="flex-1 bg-white">
       <Header title="Pokédex" openDrawer={navigation.openDrawer} />
       <View className="flex-1 items-center mt-2">
         <FlatList
