@@ -21,6 +21,7 @@ export interface EvolutionChainInterface {
     {
       id: number;
       name: string;
+      sprite: string;
     },
   ];
 }
