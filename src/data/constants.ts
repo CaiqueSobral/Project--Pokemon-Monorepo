@@ -18,7 +18,7 @@ export const weatherIcons = {
   torrential_rain: 'https://media.giphy.com/media/gjHPrvAHw7USQKtVyy/giphy.gif',
 };
 
-const pokemonTypesColors = {
+export const pokemonTypesColors = {
   normal: '#A8A77A',
   fire: '#EE8130',
   water: '#6390F0',
