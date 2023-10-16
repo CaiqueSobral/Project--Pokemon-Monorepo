@@ -49,6 +49,10 @@ const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
 const habitats: Array<HabitatInterface> = [];
 
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
   const {
@@ -90,13 +94,25 @@ function arrangeHabitatsData(habitatsData: any) {
 }
 
 function arrangeEvolutionData(evolution_chain: any) {
+  type Specie = {
+    id: number;
+    name: string;
+    sprite: string;
+  };
   try {
     for (const item in evolution_chain) {
       const evolutionData = evolution_chain[item];
-
       const evolutionChain: EvolutionChainInterface = {
         id: evolutionData.id,
-        species: evolutionData.species,
+        species: evolutionData.species
+          .map((e: Specie) => {
+            return {
+              id: e.id,
+              name: capitalize(e.name),
+              sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${e.name}.png`,
+            };
+          })
+          .sort((a: Specie, b: Specie) => a.id - b.id),
       };
       evolutions.push(evolutionChain);
     }
@@ -112,12 +128,9 @@ async function arrangePokemonData(gen_1: any) {
 
       const pokemon: PokemonInterface = {
         id: pokemonData.id,
-        name:
-          pokemonData.pokemon[0].name.charAt(0).toUpperCase() +
-          pokemonData.pokemon[0].name
-            .slice(1)
-            .replace('n-f', 'n ♀')
-            .replace('n-m', 'n ♂'),
+        name: capitalize(pokemonData.pokemon[0].name)
+          .replace('n-f', 'n ♀')
+          .replace('n-m', 'n ♂'),
         height: pokemonData.pokemon[0].height * 10,
         weight: pokemonData.pokemon[0].weight / 10,
         sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
@@ -128,7 +141,7 @@ async function arrangePokemonData(gen_1: any) {
         },
         captureRate: pokemonData.capture_rate,
         evolutionChainId: pokemonData.evolution_chain_id,
-        habitat: pokemonData.habitat.name,
+        habitat: capitalize(pokemonData.habitat.name),
         types: pokemonData.pokemon[0].types.map(
           (e: { type: { name: string } }) => e.type.name,
         ),
