@@ -6,7 +6,7 @@ import PrimaryText from '../Custom/PrimaryText';
 
 export default function HomeHeader() {
   return (
-    <View className="h-[10%] w-full flex-row items-center mt-2 mb-10">
+    <View className="flex-1 w-full flex-row items-center mt-4 mb-4">
       <View className="flex-1 justify-center items-start pt-[10]">
         <PrimaryText classname={'text-xl'} text="Welcome back, User" />
       </View>

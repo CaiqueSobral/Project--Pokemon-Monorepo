@@ -12,8 +12,8 @@ type Props = {
 export default function WeatherView(props: Props) {
   const longCity = props.city.length >= 12;
   return (
-    <View className="w-[100%] h-[30%] ">
-      <ContainerWithTitle title={'Weather'}>
+    <View className="flex-[3] w-full mt-4">
+      <ContainerWithTitle title="Weather">
         <View className="h-full w-full bg-white p-2">
           <View className="flex-1 flex-row items-center px-4">
             <View className="flex-1 flex-col">
