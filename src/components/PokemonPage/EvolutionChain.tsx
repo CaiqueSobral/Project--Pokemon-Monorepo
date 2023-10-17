@@ -26,7 +26,7 @@ export default function EvolutionChain(props: Props) {
                 className="h-full w-full"
               />
               {i != evolutions[0].species.length - 1 && (
-                <View className="h-4 w-4 absolute right-0 top-[50%] translate-y-4 translate-x-[4] rotate-180">
+                <View className="h-4 w-4 absolute right-0 top-[50%] translate-y-[8px] rotate-180">
                   <Image
                     source={require('../../../assets/icons/back-icon.png')}
                     resizeMode="contain"
