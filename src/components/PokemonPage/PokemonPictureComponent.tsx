@@ -13,7 +13,7 @@ type Props = {
 };
 export default function PokemonPicture(props: Props) {
   return (
-    <View className="h-60 w-[85%] mt-4 border-4">
+    <View className="h-64 w-[85%] mt-4 border-4">
       <LinearGradient className="flex-1" colors={props.colors}>
         <View className="flex-1 items-center justify-center">
           <View className="h-full w-full absolute self-center justify-self-end bottom-[5%]">
