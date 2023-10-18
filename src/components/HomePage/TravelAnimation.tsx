@@ -3,12 +3,7 @@ import { Image, View, Dimensions, Pressable } from 'react-native';
 import ContainerWithRoundedBorders from '../Custom/ContainerRoundedBorders';
 import Carousel from 'react-native-reanimated-carousel';
 import { Easing } from 'react-native-reanimated';
-
-const images = [
-  require('../../../assets/images/city.png'),
-  require('../../../assets/images/city1.png'),
-  require('../../../assets/images/city2.png'),
-];
+import { cityImages } from '../../data/constants';
 
 export default function TravelingAnimation() {
   const getSize = () => {
@@ -25,7 +20,7 @@ export default function TravelingAnimation() {
         <ContainerWithRoundedBorders>
           <Carousel
             width={size - 8}
-            data={images}
+            data={cityImages}
             autoPlay={true}
             scrollAnimationDuration={3000}
             autoPlayInterval={0}
@@ -36,14 +31,14 @@ export default function TravelingAnimation() {
               type: 'timing',
               config: {
                 easing: Easing.linear,
-                duration: 3000,
+                duration: 3250,
               },
             }}
             renderItem={(item) => {
               return (
                 <View className="flex-1">
                   <Image
-                    source={item.item}
+                    source={{ uri: item.item }}
                     resizeMode="cover"
                     className="w-full h-full"
                   />
@@ -51,7 +46,7 @@ export default function TravelingAnimation() {
               );
             }}
           />
-          <View className={`absolute w-full h-full -top-[1]`}>
+          <View className={`absolute w-full h-full`}>
             <Image
               source={require('../../../assets/images/walking.gif')}
               resizeMode="cover"
