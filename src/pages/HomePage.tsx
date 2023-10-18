@@ -29,7 +29,9 @@ export default function HomePage({ navigation }: NavigationScreensProps) {
         />
       </View>
       <View className="h-[50%] w-full mt-2 items-center">
-        <TravelingAnimation />
+        <TravelingAnimation
+          isDay={weatherContext.currentWeather.weather.isDay}
+        />
       </View>
     </SafeAreaView>
   );

@@ -5,7 +5,11 @@ import Carousel from 'react-native-reanimated-carousel';
 import { Easing } from 'react-native-reanimated';
 import { cityImages } from '../../data/constants';
 
-export default function TravelingAnimation() {
+type Props = {
+  isDay: boolean;
+};
+
+export default function TravelingAnimation(props: Props) {
   const getSize = () => {
     return Dimensions.get('window').height * 0.45 >
       Dimensions.get('window').width * 0.9 - 8
@@ -46,11 +50,20 @@ export default function TravelingAnimation() {
               );
             }}
           />
-          <View className={`absolute w-full h-full`}>
+          <View style={{ width: size, height: size }} className="absolute">
             <Image
               source={require('../../../assets/images/walking.gif')}
               resizeMode="cover"
               className="w-full h-full"
+            />
+            <Image
+              source={
+                props.isDay
+                  ? require('../../../assets/images/sky/day_sky.png')
+                  : require('../../../assets/images/sky/night_sky.png')
+              }
+              resizeMode="cover"
+              className="absolute w-full h-full -z-50"
             />
           </View>
         </ContainerWithRoundedBorders>

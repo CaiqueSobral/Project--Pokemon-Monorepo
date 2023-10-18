@@ -19,9 +19,9 @@ export const weatherIcons = {
 };
 
 export const cityImages = [
-  'https://i.pinimg.com/originals/7f/17/bc/7f17bcbcc8b8bf5ec5a87e6a2c5f9397.png',
-  'https://i.pinimg.com/originals/54/50/bb/5450bb09b5897870f65e176f40ef34d5.png',
-  'https://i.pinimg.com/originals/ab/db/00/abdb00e3e9392b6be1b3f10fc9194ebd.png',
+  'https://i.pinimg.com/originals/75/48/07/7548077b3cf9627619716e3b3989e9b7.png',
+  'https://i.pinimg.com/originals/7b/c7/aa/7bc7aa1e7a138a10843a2175295ebba2.png',
+  'https://i.pinimg.com/originals/50/37/fb/5037fbdb83789f718af306b1d23a51ab.png',
 ];
 
 export const pokemonTypesColors = {
