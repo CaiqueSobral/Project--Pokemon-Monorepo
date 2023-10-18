@@ -50,7 +50,10 @@ export default function TravelingAnimation(props: Props) {
               );
             }}
           />
-          <View style={{ width: size, height: size }} className="absolute">
+          <View
+            style={{ width: size - 8, height: size - 8 }}
+            className="absolute"
+          >
             <Image
               source={require('../../../assets/images/walking.gif')}
               resizeMode="cover"
