@@ -31,7 +31,7 @@ export default function PrimaryButton(props: Props) {
 
   return (
     <Pressable
-      className="w-[95%] h-full max-h-12"
+      className="w-11/12 h-full max-h-12"
       onPress={props.onPress}
       onPressIn={() => (buttonIsPressed.value = 1)}
       onPressOut={() => (buttonIsPressed.value = 0)}
