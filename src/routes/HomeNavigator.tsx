@@ -18,17 +18,20 @@ import { StackScreenProps } from '@react-navigation/stack';
 import LoginPage from '../pages/LoginPage';
 import { PokemonInterface } from '../interfaces/Pokemon';
 import PokemonDexPage from '../pages/PokemonDexPage';
+import TravelPage from '../pages/TravelPage';
 
 type StackParamList = {
   LoginPage: undefined;
   HomePage: undefined;
   PokedexPage: undefined;
   PokemonDexPage: { pokemon: PokemonInterface };
+  TravelPage: undefined;
 };
 
 type DrawerParamList = {
   HomeDrawer: NavigatorScreenParams<StackParamList>;
   PokeDexDrawer: undefined;
+  TravelDrawer: undefined;
 };
 
 export type LoginPageScreenProps = NativeStackScreenProps<
@@ -51,6 +54,11 @@ export type PokemonDexPageScreenProps = NativeStackScreenProps<
   'PokemonDexPage'
 >;
 
+export type TravelPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'TravelPage'
+>;
+
 export type NavigationScreensProps = CompositeScreenProps<
   StackScreenProps<StackParamList>,
   DrawerScreenProps<DrawerParamList>
@@ -66,6 +74,11 @@ function DrawerNavigator() {
         options={{ title: 'Pokédex', headerTitleStyle: FONTSTART2P }}
         name="PokeDexDrawer"
         component={PokedexPage}
+      />
+      <Drawer.Screen
+        options={{ title: 'Travel', headerTitleStyle: FONTSTART2P }}
+        name="TravelDrawer"
+        component={TravelPage}
       />
     </Drawer.Navigator>
   );
@@ -89,6 +102,7 @@ export default function HomeStackNavigator() {
         name="PokemonDexPage"
         component={PokemonDexPage}
       ></Stack.Screen>
+      <Stack.Screen name="TravelPage" component={TravelPage}></Stack.Screen>
     </Stack.Navigator>
   );
 }
