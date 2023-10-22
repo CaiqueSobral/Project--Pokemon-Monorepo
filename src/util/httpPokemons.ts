@@ -5,6 +5,7 @@ import {
   PokemonInterface,
 } from '../interfaces/Pokemon';
 import axios from 'axios';
+import { getImage } from '../firebase/firebaseStorage';
 
 const query = `query getPokemonsGen1 {
   gen_1: pokemon_v2_generation(where: {id: {_eq: 1}}) {
@@ -66,7 +67,7 @@ export async function getAllPokemons() {
 
   await arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
-  arrangeHabitatsData(habitats);
+  await arrangeHabitatsData(habitats);
 
   console.log('Pokemons loaded!');
   return {
@@ -76,13 +77,16 @@ export async function getAllPokemons() {
   };
 }
 
-function arrangeHabitatsData(habitatsData: any) {
+async function arrangeHabitatsData(habitatsData: any) {
   try {
     for (const item in habitatsData) {
       const habitatData = habitatsData[item];
 
+      if (habitatData.name === 'rare') continue;
+
       const habitat: HabitatInterface = {
         name: habitatData.name,
+        sprite: await getImage(habitatData.name, 1),
         id: habitatData.id,
       };
 

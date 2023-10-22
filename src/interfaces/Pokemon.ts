@@ -28,5 +28,6 @@ export interface EvolutionChainInterface {
 
 export interface HabitatInterface {
   name: string;
+  sprite: string;
   id: number;
 }
