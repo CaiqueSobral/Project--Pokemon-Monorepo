@@ -9,8 +9,8 @@ type Props = {
 
 export default function TravelButtons(props: Props) {
   return (
-    <View className="flex-1 w-full items-center my-2 space-y">
-      <View className="flex-1 w-full items-center justify-center flex-row space-x-4">
+    <View className="flex-1 w-full items-center mt-2 space-y-4">
+      <View className="h-[35%] w-full items-center justify-center flex-row space-x-4">
         <View className="flex-1 w-full items-center">
           <PrimaryButton
             text="< Prev."
@@ -24,7 +24,7 @@ export default function TravelButtons(props: Props) {
           />
         </View>
       </View>
-      <View className="flex-1 w-full justify-center items-center">
+      <View className="h-[35%] w-full justify-center items-center">
         <PrimaryButton text="Go" />
       </View>
     </View>

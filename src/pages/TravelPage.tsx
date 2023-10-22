@@ -61,10 +61,10 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
     <SafeAreaView className="flex-1 items-center">
       <Header title="Travel" openDrawer={navigation.openDrawer} />
       <View className="flex-1 w-[90%] items-center">
-        <View className="h-[80%] w-full border-4 my-2 space-y-6">
-          <View className="justify-center items-center w-full mt-6">
+        <View className="h-4/5 w-full border-4 mb-2 mt-4">
+          <View className="justify-center items-center w-full my-4">
             <PrimaryText
-              classname="text-lg"
+              classname="text-lg pt-[8]"
               text={capitalize(pokemonsHabitats[index].name)}
             />
           </View>
@@ -100,7 +100,7 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
               }}
             />
           </View>
-          <View className="flex-1 items-center justify-start">
+          <View className="flex-1 items-center justify-start mt-8">
             <View className="w-[75%] items-center">
               <PrimaryText text="Common types" />
             </View>
