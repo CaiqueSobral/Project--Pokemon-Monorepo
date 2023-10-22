@@ -7,9 +7,9 @@ import { PokemonsContext } from '../data/context/pokemonsContext';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import PrimaryText from '../components/Custom/PrimaryText';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
-import PrimaryButton from '../components/Custom/PrimaryButton';
 import TypesComponent from '../components/TravelPage/TypesComponent';
 import { WeatherContext } from '../data/context/weatherContext';
+import TravelButtons from '../components/TravelPage/TravelButtons';
 
 export default function TravelPage({ navigation }: NavigationScreensProps) {
   const { habitats, pokemons } = useContext(PokemonsContext);
@@ -17,7 +17,7 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
   const [index, setIndex] = useState(0);
 
   const pokemonsHabitats = [...habitats];
-  console.log(pokemonsHabitats);
+
   const pokemonsTypes = pokemons
     .filter(
       (pokemon) =>
@@ -45,10 +45,10 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
     getMostTypes(pokemonsTypes.filter((e) => e != mostType)),
   ];
   const getSize = () => {
-    return Dimensions.get('window').height * 0.4 >
-      Dimensions.get('window').width * 0.9 - 8
-      ? Dimensions.get('window').width * 0.9 - 8
-      : Dimensions.get('window').height * 0.4 - 8;
+    return Dimensions.get('window').height * 0.35 >
+      Dimensions.get('window').width * 0.9 - 4
+      ? Dimensions.get('window').width * 0.9 - 4
+      : Dimensions.get('window').height * 0.35 - 4;
   };
   const size = getSize();
 
@@ -61,53 +61,56 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
     <SafeAreaView className="flex-1 items-center">
       <Header title="Travel" openDrawer={navigation.openDrawer} />
       <View className="flex-1 w-[90%] items-center">
-        <View
-          style={{ height: size, width: size }}
-          className="border-4 mb-2 mt-4"
-        >
-          <Carousel
-            ref={carouselRef}
-            width={size - 8}
-            data={pokemonsHabitats}
-            enabled={true}
-            scrollAnimationDuration={100}
-            onSnapToItem={(index) => setIndex(index)}
-            renderItem={(habitat) => {
-              return (
-                <View className="h-full w-full">
-                  <Image
-                    source={{
-                      uri: habitat.item.sprite,
-                    }}
-                    resizeMode="contain"
-                    className="h-full w-full"
-                  />
-                </View>
-              );
-            }}
-          />
-          <Custom8BitRoundedBorders />
-        </View>
-        <View className="h-[35%] w-full border-4 my-2">
-          <View className="h-[20%] justify-center items-center w-full">
+        <View className="h-[80%] w-full border-4 my-2 space-y-6">
+          <View className="justify-center items-center w-full mt-6">
             <PrimaryText
               classname="text-lg"
               text={capitalize(pokemonsHabitats[index].name)}
             />
           </View>
-          <View className="flex-1 items-center justify-start mt-2">
-            <View className="h-[20%] w-[75%] items-start">
+          <View
+            style={{ height: size, width: size }}
+            className="items-center self-center"
+          >
+            <Carousel
+              ref={carouselRef}
+              width={size}
+              height={size}
+              data={pokemonsHabitats}
+              enabled={true}
+              scrollAnimationDuration={100}
+              onSnapToItem={(index) => setIndex(index)}
+              style={{
+                borderColor: 'black',
+                borderWidth: 4,
+                justifyContent: 'center',
+              }}
+              renderItem={(habitat) => {
+                return (
+                  <View style={{ height: size, width: size }}>
+                    <Image
+                      source={{
+                        uri: habitat.item.sprite,
+                      }}
+                      resizeMode="cover"
+                      className="h-full w-full"
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
+          <View className="flex-1 items-center justify-start">
+            <View className="w-[75%] items-center">
               <PrimaryText text="Common types" />
             </View>
-            <View className="h-[70%]">
+            <View className="h-1/6 mt-2">
               <TypesComponent types={mostTypes} />
             </View>
-          </View>
-          <View className="flex-1 items-center justify-start mt-2">
-            <View className="h-[20%] w-[75%] items-start">
+            <View className="w-[75%] items-center mt-8 mb-2">
               <PrimaryText text="Weather" />
             </View>
-            <View className="flex-1 w-[75%] items-center flex-row mb-2">
+            <View className="h-2/5 w-[75%] items-center flex-row mb-2">
               <View className="flex-1">
                 <PrimaryText
                   classname="text-center text-lg mt-[12]"
@@ -128,25 +131,7 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
 
           <Custom8BitRoundedBorders />
         </View>
-        <View className="flex-1 w-full items-center my-2 space-y">
-          <View className="flex-1 w-full items-center justify-center flex-row space-x-4">
-            <View className="flex-1 w-full items-center">
-              <PrimaryButton
-                text="< Prev."
-                onPress={carouselRef.current?.prev}
-              />
-            </View>
-            <View className="flex-1 w-full items-center">
-              <PrimaryButton
-                text="Next >"
-                onPress={carouselRef.current?.next}
-              />
-            </View>
-          </View>
-          <View className="flex-1 w-full justify-center items-center">
-            <PrimaryButton text="Go" />
-          </View>
-        </View>
+        <TravelButtons carouselRef={carouselRef} />
       </View>
     </SafeAreaView>
   );

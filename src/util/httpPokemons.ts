@@ -48,7 +48,7 @@ const headers = {
 
 const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
-const habitats: Array<HabitatInterface> = [];
+const pokemonsHabitats: Array<HabitatInterface> = [];
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -73,7 +73,7 @@ export async function getAllPokemons() {
   return {
     pokemons: pokemons,
     evolutions: evolutions,
-    habitats: habitats,
+    habitats: pokemonsHabitats,
   };
 }
 
@@ -82,15 +82,15 @@ async function arrangeHabitatsData(habitatsData: any) {
     for (const item in habitatsData) {
       const habitatData = habitatsData[item];
 
-      if (habitatData.name === 'rare') continue;
+      if (habitatData.name == 'rare') continue;
 
       const habitat: HabitatInterface = {
         name: habitatData.name,
         sprite: await getImage(habitatData.name, 1),
-        id: habitatData.id,
+        id: pokemonsHabitats.length,
       };
 
-      habitats.push(habitat);
+      pokemonsHabitats.push(habitat);
     }
   } catch (error) {
     console.log(error);
