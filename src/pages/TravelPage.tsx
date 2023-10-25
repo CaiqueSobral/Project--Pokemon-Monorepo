@@ -114,13 +114,13 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
               <View className="flex-1">
                 <PrimaryText
                   classname="text-center text-lg mt-[12]"
-                  text={weather.currentWeather.weather.tempC + 'ºC'}
+                  text={habitats[index].habitatWeather.weather.tempC + 'ºC'}
                 />
               </View>
               <View className="flex-1 w-[75%]">
                 <Image
                   source={{
-                    uri: weather.currentWeather.weather.condition.icon,
+                    uri: habitats[index].habitatWeather.weather.condition.icon,
                   }}
                   resizeMode="contain"
                   className="h-full w-full"

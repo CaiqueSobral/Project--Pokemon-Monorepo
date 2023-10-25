@@ -6,6 +6,9 @@ import {
 } from '../interfaces/Pokemon';
 import axios from 'axios';
 import { getImage } from '../firebase/firebaseStorage';
+import { getWeatherData } from './httpWeather';
+import { WeatherInterface } from '../interfaces/Weather';
+import { habitatsLocations } from '../data/constants';
 
 const query = `query getPokemonsGen1 {
   gen_1: pokemon_v2_generation(where: {id: {_eq: 1}}) {
@@ -88,6 +91,7 @@ async function arrangeHabitatsData(habitatsData: any) {
         name: habitatData.name,
         sprite: await getImage(habitatData.name, 1),
         id: pokemonsHabitats.length,
+        habitatWeather: await getHabitatWeather(habitatData.name),
       };
 
       pokemonsHabitats.push(habitat);
@@ -95,6 +99,12 @@ async function arrangeHabitatsData(habitatsData: any) {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function getHabitatWeather(
+  name: keyof typeof habitatsLocations,
+): Promise<WeatherInterface> {
+  return await getWeatherData(habitatsLocations[name]);
 }
 
 function arrangeEvolutionData(evolution_chain: any) {

@@ -66,8 +66,6 @@ export async function getWeatherData(coords: Array<number>) {
     },
   });
 
-  console.log('Getting Weather Information...');
-
   const weather: WeatherInterface = {
     location: {
       name: data.location.name,
@@ -84,7 +82,6 @@ export async function getWeatherData(coords: Array<number>) {
     },
   };
 
-  console.log('Weather Information Loaded!');
   return weather;
 }
 
