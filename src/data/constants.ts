@@ -44,3 +44,14 @@ export const pokemonTypesColors = {
   steel: '#B7B7CE',
   fairy: '#D685AD',
 };
+
+export const habitatsLocations = {
+  cave: [-10.5113, -40.3224],
+  forest: [-3.10719, -60.0261],
+  grassland: [-17.6557865, -57.432597],
+  mountain: [5.1315566, -60.7585488],
+  'rough-terrain': [-22.949259, -43.154576],
+  sea: [-12.974722, -38.476665],
+  urban: [-23.533773, -46.62529],
+  'waters-edge': [-27.2562314, -55.920111],
+};
