@@ -2,11 +2,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header/Header';
 import { NavigationScreensProps } from '../routes/HomeNavigator';
 import React, { useContext } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { WeatherContext } from '../data/context/weatherContext';
 import HomeHeader from '../components/HomePage/HomeHeader';
 import WeatherView from '../components/HomePage/WeatherView';
-import PrimaryButton from '../components/Custom/PrimaryButton';
 import TravelingAnimation from '../components/HomePage/TravelAnimation';
 
 export default function HomePage({ navigation }: NavigationScreensProps) {
