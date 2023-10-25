@@ -17,7 +17,6 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
   const weatherContext = useContext(WeatherContext);
 
   const loadApp = async () => {
-    setModalActive(true);
     const getPermissions = async (): Promise<boolean> => {
       let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -30,7 +29,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
 
     const getLocation = async () => {
       const permission = await getPermissions();
-
+      setModalActive(true);
       if (permission) {
         const { coords } = await Location.getCurrentPositionAsync();
         await weatherContext.getWeather([
@@ -39,6 +38,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
         ]);
       }
     };
+
     await getLocation();
     await pokemonContext.getData();
     setModalActive(false);
