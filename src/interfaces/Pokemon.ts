@@ -1,3 +1,5 @@
+import { WeatherInterface } from './Weather';
+
 export interface PokemonInterface {
   id: number;
   name: string;
@@ -30,4 +32,5 @@ export interface HabitatInterface {
   name: string;
   sprite: string;
   id: number;
+  habitatWeather: WeatherInterface;
 }
