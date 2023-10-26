@@ -23,16 +23,13 @@ export default function PokemonsContextProvider({
   const [habitats, setHabitats] = useState<Array<HabitatInterface>>([]);
 
   const getData = async () => {
-    if (
-      pokemons.length === 0 ||
-      evolutionChain.length === 0 ||
-      habitats.length === 0
-    ) {
-      const pokeTemp = await getAllPokemons();
-      setPokemons(pokeTemp.pokemons);
-      setEvolutionChain(pokeTemp.evolutions);
-      setHabitats(pokeTemp.habitats);
-    }
+    setPokemons([]);
+    setEvolutionChain([]);
+    setHabitats([]);
+    const pokeTemp = await getAllPokemons();
+    setPokemons(pokeTemp.pokemons);
+    setEvolutionChain(pokeTemp.evolutions);
+    setHabitats(pokeTemp.habitats);
   };
 
   return (

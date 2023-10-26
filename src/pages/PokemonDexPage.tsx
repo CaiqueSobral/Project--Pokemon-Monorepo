@@ -67,7 +67,10 @@ export default function PokemonDexPage({
                 <PrimaryText text={pokemon.habitat} />
               </View>
               <View className="flex-1">
-                <EvolutionChain evolutionChainId={pokemon.evolutionChainId} />
+                <EvolutionChain
+                  evolutionChainId={pokemon.evolutionChainId}
+                  pokemonId={pokemon.id}
+                />
               </View>
             </View>
           </ContainerWithRoundedBorders>
