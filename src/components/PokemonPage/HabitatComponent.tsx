@@ -29,7 +29,6 @@ export default function HabitatComponent(props: Props) {
     }
   };
 
-  console.log(getColor());
   return (
     <View className="flex-1 w-[90%] justify-between -mb">
       <View className="flex-1 justify-center items-center">
