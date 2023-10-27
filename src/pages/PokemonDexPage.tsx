@@ -12,6 +12,7 @@ import TypesComponent from '../components/PokemonPage/TypesComponent';
 import MassComponent from '../components/PokemonPage/MassComponent';
 import PokemonPicture from '../components/PokemonPage/PokemonPictureComponent';
 import EvolutionChain from '../components/PokemonPage/EvolutionChain';
+import HabitatComponent from '../components/PokemonPage/HabitatComponent';
 
 export default function PokemonDexPage({
   navigation,
@@ -43,7 +44,7 @@ export default function PokemonDexPage({
         <View className="h-[5%] w-[90%] mt-8 justify-center items-center">
           <BackButton navigation={navigation.goBack} />
           <PrimaryText
-            classname="text-lg px-4 pt-[12] text-center shadow-white"
+            classname="text-lg px-4 pt-[12] text-center"
             text={pokemon.name}
           ></PrimaryText>
         </View>
@@ -55,18 +56,17 @@ export default function PokemonDexPage({
                 classname="text-sm top-[2%] left-[2%] absolute"
                 text={`#${pokemon.id}`}
               />
-              <View className="h-[40%] mt-[8%]">
+              <View className="flex h-2/5 mt-6">
                 <TypesComponent types={pokemon.types} colors={colors} />
                 <MassComponent
                   height={pokemon.height}
                   weight={pokemon.weight}
                 />
               </View>
-              <View className="flex-1 items-center justify-end">
-                <PrimaryText text="Habitat" />
-                <PrimaryText text={pokemon.habitat} />
+              <View className="flex-1 items-center">
+                <HabitatComponent habitat={pokemon.habitat} color={colors[0]} />
               </View>
-              <View className="flex-[2]">
+              <View className="flex-1">
                 <EvolutionChain
                   evolutionChainId={pokemon.evolutionChainId}
                   pokemonId={pokemon.id}
