@@ -25,9 +25,6 @@ export default function EvolutionChain(props: Props) {
     (e) => e.name.toLowerCase() === 'eevee' && !isEevee,
   );
 
-  console.log(isEevee);
-  console.log(poke);
-
   const renderChain = (
     items: Array<{ id: number; name: string; sprite: string }>,
   ) => {
