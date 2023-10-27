@@ -23,9 +23,6 @@ export default function PokemonsContextProvider({
   const [habitats, setHabitats] = useState<Array<HabitatInterface>>([]);
 
   const getData = async () => {
-    setPokemons([]);
-    setEvolutionChain([]);
-    setHabitats([]);
     const pokeTemp = await getAllPokemons();
     setPokemons(pokeTemp.pokemons);
     setEvolutionChain(pokeTemp.evolutions);

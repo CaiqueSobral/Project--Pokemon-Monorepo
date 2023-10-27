@@ -94,7 +94,7 @@ async function arrangeHabitatsData(habitatsData: any) {
         habitatWeather: await getHabitatWeather(habitatData.name),
       };
 
-      pokemonsHabitats.push(habitat);
+      pokemonsHabitats.splice(habitat.id, 0, habitat);
     }
   } catch (error) {
     console.log(error);
@@ -128,7 +128,7 @@ function arrangeEvolutionData(evolution_chain: any) {
           })
           .sort((a: Specie, b: Specie) => a.id - b.id),
       };
-      evolutions.push(evolutionChain);
+      evolutions.splice(evolutionChain.id, 0, evolutionChain);
     }
   } catch (e) {
     console.log(e);
@@ -167,7 +167,7 @@ async function arrangePokemonData(gen_1: any) {
           pokemon.sprite3d.height = h;
         },
       );
-      pokemons.push(pokemon);
+      pokemons.splice(pokemon.id, 0, pokemon);
     }
   } catch (e) {
     console.log(e);
