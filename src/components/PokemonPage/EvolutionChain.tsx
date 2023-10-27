@@ -21,6 +21,18 @@ export default function EvolutionChain(props: Props) {
     (value) => value.id === id,
   )[0];
 
+  const notChain =
+    poke.name.toLowerCase() === 'hitmonchan' ||
+    poke.name.toLowerCase() === 'hitmonlee';
+  if (notChain) {
+    evolutions.species.splice(0, evolutions.species.length);
+    evolutions.species.push({
+      id: poke.id,
+      name: poke.name,
+      sprite: poke.sprite,
+    });
+  }
+
   const isEeveeEvolution = evolutions.species.some(
     (e) => e.name.toLowerCase() === 'eevee' && !isEevee,
   );
@@ -31,16 +43,16 @@ export default function EvolutionChain(props: Props) {
     return items.map((item, i) => {
       return (
         <View key={i} className="w-[30%] items-center justify-center">
-          <View className="flex-[3] h-full w-full mb-2">
+          <View className="h-2/3 w-10/12">
             <Image
               source={{
-                uri: pokemons.filter((poke) => poke.id === item.id)[0].sprite,
+                uri: item.sprite,
               }}
               resizeMode="contain"
               className="h-full w-full"
             />
             {i != items.length - 1 && !isEevee && (
-              <View className="h-4 w-4 absolute right-0 top-[50%] translate-y-[8px] translate-x-[8px] rotate-180">
+              <View className="h-4 w-4 absolute left-full top-1/2 rotate-180">
                 <Image
                   source={require('../../../assets/icons/back-icon.png')}
                   resizeMode="contain"
@@ -49,7 +61,7 @@ export default function EvolutionChain(props: Props) {
               </View>
             )}
           </View>
-          <View className="flex-1">
+          <View>
             <PrimaryText text={item.name} classname="text-[8px]" />
           </View>
         </View>
@@ -61,9 +73,9 @@ export default function EvolutionChain(props: Props) {
     items: Array<{ id: number; name: string; sprite: string }>,
   ) => {
     return (
-      <View className="flex-1 justify-center items-center">
-        <View className="w-[35%] h-full items-center justify-end">
-          <View className="h-full w-full mb-2">
+      <View className="flex-1 justify-center items-center -mt-4">
+        <View className="w-2/5 h-full items-center justify-end">
+          <View className="h-full w-full">
             <Image
               source={{
                 uri: pokemons.filter((poke) => poke.id === items[0].id)[0]
