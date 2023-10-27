@@ -3,6 +3,7 @@ import { ImageBackground, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
 import { PokemonsContext } from '../../data/context/pokemonsContext';
+import { HabitatsColors } from '../../data/constants';
 
 type Props = {
   habitat: string;
@@ -19,11 +20,21 @@ export default function HabitatComponent(props: Props) {
         )[0].sprite
       : null;
 
+  const getColor = () => {
+    let key: keyof typeof HabitatsColors;
+    for (key in HabitatsColors) {
+      if (key === props.habitat.toLowerCase()) {
+        return HabitatsColors[key];
+      }
+    }
+  };
+
+  console.log(getColor());
   return (
     <View className="flex-1 w-[90%] justify-between -mb">
       <View className="flex-1 justify-center items-center">
         <View
-          className="flex w-4/5 h-full items-center justify-center"
+          className="flex w-4/5 h-full items-center justify-center border-2"
           style={{ backgroundColor: !actualHabitat ? '#eee' : 'transparent' }}
         >
           {actualHabitat && (
@@ -38,8 +49,9 @@ export default function HabitatComponent(props: Props) {
           )}
 
           <PrimaryText
+            style={{ backgroundColor: actualHabitat ? getColor() : '#aaa' }}
             text={`Habitat: ${actualHabitat ? props.habitat : '???'}`}
-            classname="absolute top-0 left-0 text-[8px] pt-[4] text-white bg-gray-400 px-1 border-r border-b"
+            classname="absolute top-0 left-0 text-[8px] pt-[4] text-white px-1 border-r border-b"
           />
           <Custom8BitBorders />
         </View>
