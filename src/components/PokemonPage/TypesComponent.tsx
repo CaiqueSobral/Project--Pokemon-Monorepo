@@ -19,7 +19,7 @@ export default function TypesComponent(props: Props) {
           return (
             <View
               key={i}
-              className="h-6 w-[33%] items-center justify-center"
+              className="h-6 w-1/3 items-center justify-center"
               style={{ backgroundColor: props.colors[i] }}
             >
               <PrimaryText
