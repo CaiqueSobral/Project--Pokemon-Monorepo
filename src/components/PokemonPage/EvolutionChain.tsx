@@ -52,7 +52,7 @@ export default function EvolutionChain(props: Props) {
               className="h-full w-full"
             />
             {i != items.length - 1 && !isEevee && (
-              <View className="h-4 w-4 absolute left-full top-1/2 rotate-180">
+              <View className="h-4 w-4 absolute left-full top-[60%] rotate-180">
                 <Image
                   source={require('../../../assets/icons/back-icon.png')}
                   resizeMode="contain"
