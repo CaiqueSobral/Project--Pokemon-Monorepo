@@ -1,6 +1,6 @@
 import { PokemonsContext } from '../../data/context/pokemonsContext';
 import React, { useContext } from 'react';
-import { Image, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import { EvolutionChainInterface } from '../../interfaces/Pokemon';
 
@@ -57,23 +57,74 @@ export default function EvolutionChain(props: Props) {
     });
   };
 
+  const renderEevee = (
+    items: Array<{ id: number; name: string; sprite: string }>,
+  ) => {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <View className="w-[35%] h-full items-center justify-end">
+          <View className="h-full w-full mb-2">
+            <Image
+              source={{
+                uri: pokemons.filter((poke) => poke.id === items[0].id)[0]
+                  .sprite,
+              }}
+              resizeMode="contain"
+              className="h-full w-full"
+            />
+            <View
+              style={{
+                transform: [{ translateY: 20 }],
+                justifyContent: 'space-between',
+              }}
+              className="h-4 w-full absolute top-full flex-row items-center"
+            >
+              {items.map((_, i) => {
+                return (
+                  i != 0 && (
+                    <Image
+                      key={i}
+                      style={{
+                        transform: [{ rotate: -45 * i + 'deg' }],
+                      }}
+                      source={require('../../../assets/icons/back-icon.png')}
+                      resizeMode="contain"
+                      className="h-3 w-3"
+                    />
+                  )
+                );
+              })}
+            </View>
+          </View>
+          <View className="w-full">
+            <PrimaryText
+              text={items[0].name}
+              classname="text-[8px] text-center"
+            />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View className="flex-1 flex-row justify-center items-center">
-      {isEevee &&
-        renderChain(
-          evolutions.species.filter(
-            (item) => item.name.toLowerCase() === 'eevee',
-          ),
-        )}
-      {!isEevee && !isEeveeEvolution && renderChain(evolutions.species)}
-      {!isEevee &&
-        isEeveeEvolution &&
-        renderChain(
-          evolutions.species.filter(
-            (item) =>
-              item.name.toLowerCase() === 'eevee' || item.id === poke.id,
-          ),
-        )}
-    </View>
+    <>
+      {isEevee && renderEevee(evolutions.species)}
+      <View className="flex-1 flex-row justify-center items-center">
+        {isEevee &&
+          renderChain(
+            evolutions.species.filter((e) => e.name.toLowerCase() != 'eevee'),
+          )}
+        {!isEevee && !isEeveeEvolution && renderChain(evolutions.species)}
+        {!isEevee &&
+          isEeveeEvolution &&
+          renderChain(
+            evolutions.species.filter(
+              (item) =>
+                item.name.toLowerCase() === 'eevee' || item.id === poke.id,
+            ),
+          )}
+      </View>
+    </>
   );
 }

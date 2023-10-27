@@ -62,11 +62,11 @@ export default function PokemonDexPage({
                   weight={pokemon.weight}
                 />
               </View>
-              <View className="flex-1 items-center justify-center">
+              <View className="flex-1 items-center justify-end">
                 <PrimaryText text="Habitat" />
                 <PrimaryText text={pokemon.habitat} />
               </View>
-              <View className="flex-1">
+              <View className="flex-[2]">
                 <EvolutionChain
                   evolutionChainId={pokemon.evolutionChainId}
                   pokemonId={pokemon.id}
