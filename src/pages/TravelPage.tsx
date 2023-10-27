@@ -13,7 +13,6 @@ import TravelButtons from '../components/TravelPage/TravelButtons';
 
 export default function TravelPage({ navigation }: NavigationScreensProps) {
   const { habitats, pokemons } = useContext(PokemonsContext);
-  const weather = useContext(WeatherContext);
   const [index, setIndex] = useState(0);
 
   const pokemonsHabitats = [...habitats];
