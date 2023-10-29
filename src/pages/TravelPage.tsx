@@ -1,17 +1,14 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header/Header';
-import { NavigationScreensProps } from '../routes/HomeNavigator';
-import React, { useContext, useRef, useState } from 'react';
-import { Dimensions, Image, Text, View } from 'react-native';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import { Dimensions, FlatList, Image, Text, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import PrimaryText from '../components/Custom/PrimaryText';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import TypesComponent from '../components/TravelPage/TypesComponent';
-import { WeatherContext } from '../data/context/weatherContext';
 import TravelButtons from '../components/TravelPage/TravelButtons';
 
-export default function TravelPage({ navigation }: NavigationScreensProps) {
+export default function TravelPage() {
   const { habitats, pokemons } = useContext(PokemonsContext);
   const [index, setIndex] = useState(0);
 
@@ -55,10 +52,32 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
     return str.charAt(0).toUpperCase() + str.slice(1, str.length);
   };
 
-  const carouselRef = useRef<ICarouselInstance>(null);
+  const next = useCallback(() => {
+    const currIndex = index;
+    setIndex((index) => {
+      return index === pokemonsHabitats.length - 1 ? 0 : index + 1;
+    });
+
+    currIndex === index
+      ? null
+      : carouselRef.current?.scrollToIndex({ index: index });
+  }, [index, setIndex]);
+
+  const previous = useCallback(() => {
+    const currIndex = index;
+    setIndex((index) => {
+      return index === 0 ? pokemonsHabitats.length - 1 : index - 1;
+    });
+
+    currIndex === index
+      ? null
+      : carouselRef.current?.scrollToIndex({ index: index });
+  }, [index, setIndex]);
+
+  const carouselRef = useRef<FlatList>(null);
   return (
     <SafeAreaView className="flex-1 items-center">
-      <Header title="Travel" openDrawer={navigation.openDrawer} />
+      <Header title="Travel" />
       <View className="flex-1 w-[90%] items-center">
         <View className="h-4/5 w-full border-4 mb-2 mt-4">
           <View className="justify-center items-center w-full my-4">
@@ -69,27 +88,24 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
           </View>
           <View
             style={{ height: size, width: size }}
-            className="items-center self-center"
+            className="items-center self-center border-4"
           >
-            <Carousel
+            <FlatList
               ref={carouselRef}
-              width={size}
-              height={size}
+              horizontal
+              scrollEnabled={false}
               data={pokemonsHabitats}
-              enabled={true}
-              scrollAnimationDuration={100}
-              onSnapToItem={(index) => setIndex(index)}
-              style={{
-                borderColor: 'black',
-                borderWidth: 4,
-                justifyContent: 'center',
-              }}
-              renderItem={(habitat) => {
+              renderItem={(_) => {
                 return (
-                  <View style={{ height: size, width: size }}>
+                  <View
+                    style={{
+                      height: size,
+                      width: size,
+                    }}
+                  >
                     <Image
                       source={{
-                        uri: habitat.item.sprite,
+                        uri: pokemonsHabitats[index].sprite,
                       }}
                       resizeMode="cover"
                       className="h-full w-full"
@@ -113,13 +129,16 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
               <View className="flex-1">
                 <PrimaryText
                   classname="text-center text-lg mt-[12]"
-                  text={habitats[index].habitatWeather.weather.tempC + 'ºC'}
+                  text={
+                    pokemonsHabitats[index].habitatWeather.weather.tempC + 'ºC'
+                  }
                 />
               </View>
               <View className="flex-1 w-[75%]">
                 <Image
                   source={{
-                    uri: habitats[index].habitatWeather.weather.condition.icon,
+                    uri: pokemonsHabitats[index].habitatWeather.weather
+                      .condition.icon,
                   }}
                   resizeMode="contain"
                   className="h-full w-full"
@@ -130,7 +149,7 @@ export default function TravelPage({ navigation }: NavigationScreensProps) {
 
           <Custom8BitRoundedBorders />
         </View>
-        <TravelButtons carouselRef={carouselRef} />
+        <TravelButtons nextIndex={next} previousIndex={previous} />
       </View>
     </SafeAreaView>
   );
