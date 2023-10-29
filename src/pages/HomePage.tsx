@@ -17,7 +17,7 @@ export default function HomePage({ navigation }: NavigationScreensProps) {
 
   return (
     <SafeAreaView className="flex-1 mt-2 bg-white items-center">
-      <Header openDrawer={navigation.openDrawer} />
+      <Header />
       <View className="h-[40%] w-[90%]">
         <HomeHeader />
         <WeatherView

@@ -15,7 +15,7 @@ export default function PokedexPage({ navigation }: NavigationScreensProps) {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Header title="Pokédex" openDrawer={navigation.openDrawer} />
+      <Header title="Pokédex" />
       <View className="flex-1 items-center mt-2">
         <FlatList
           data={pokemonsContext.pokemons}

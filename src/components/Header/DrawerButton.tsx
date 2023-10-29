@@ -4,13 +4,11 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
-type Props = {
-  openDrawer: () => void;
-};
-
-export default function DrawerButton(props: Props) {
+export default function DrawerButton() {
   const bgActive = useSharedValue(0);
+  const navigation = useNavigation();
 
   const rightShadowAnim = useAnimatedStyle(() => {
     return {
@@ -27,7 +25,7 @@ export default function DrawerButton(props: Props) {
   return (
     <Pressable
       className="absolute justify-self-center left-[5%]"
-      onPress={props.openDrawer}
+      onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       onPressIn={() => (bgActive.value = 1)}
       onPressOut={() => (bgActive.value = 0)}
     >
