@@ -12,11 +12,14 @@ import { PokemonInterface } from '../interfaces/Pokemon';
 import PrimaryButton from '../components/Custom/PrimaryButton';
 import PokemonPicture from '../components/HuntingPage/FoundPokemonComponent';
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withRepeat,
+  withSpring,
 } from 'react-native-reanimated';
 
-function getRandomPokemon(pokemons: Array<PokemonInterface>): PokemonInterface {
+function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   const randomId = Math.floor(Math.random() * pokemons.length);
   const pokemonsRand = [...pokemons][randomId];
   return pokemonsRand;
@@ -27,34 +30,56 @@ export default function HuntingPage({
   navigation,
 }: HuntingPageScreenProps) {
   const imageOpacity = useSharedValue(100);
-
   const animatedFoundOpacityStyle = useAnimatedStyle(() => {
     return { opacity: imageOpacity.value };
   });
 
   const HabitatName = route.params.habitatName;
-  const [foundPokemon, setFoundPokemon] = useState<PokemonInterface | null>(
-    null,
-  );
-
   const { pokemons } = useContext(PokemonsContext);
   const pokemonsInHabitat = pokemons.filter(
     (pokemon) => pokemon.habitat.toLowerCase() === HabitatName.toLowerCase(),
   );
-
-  const setRandomPoke = () => {
+  const [foundPokemon, setFoundPokemon] = useState<PokemonInterface | null>(
+    null,
+  );
+  const setRandomPokemon = () => {
     setFoundPokemon(getRandomPokemon(pokemonsInHabitat));
   };
+  const clearFoundPokemon = () => {
+    setFoundPokemon(null);
+  };
 
-  // if (!foundPokemon) {
-  //   const interval = setInterval(
-  //     () => {
-  //       setRandomPoke();
-  //       clearInterval(interval);
-  //     },
-  //     Math.floor(Math.random() * 4000 + 2000),
-  //   );
-  // }
+  const resetOpacity = () => {
+    imageOpacity.value = withSpring(100, { mass: 1, damping: 25 });
+  };
+  const startAnimation = () => {
+    imageOpacity.value = withRepeat(
+      withSpring(imageOpacity.value === 100 ? 0 : 100),
+      1,
+      false,
+      (finished) => {
+        if (finished) {
+          if (!foundPokemon) {
+            runOnJS(setRandomPokemon)();
+            runOnJS(resetOpacity)();
+          } else {
+            runOnJS(clearFoundPokemon)();
+            runOnJS(resetOpacity)();
+          }
+        }
+      },
+    );
+  };
+
+  if (!foundPokemon) {
+    const interval = setInterval(
+      () => {
+        startAnimation();
+        clearInterval(interval);
+      },
+      Math.floor(Math.random() * 4000 + 2000),
+    );
+  }
 
   const getSize = () => {
     return Dimensions.get('window').height * 0.45 >
@@ -84,9 +109,12 @@ export default function HuntingPage({
         )}
 
         {foundPokemon && (
-          <View className="h-full w-full items-center justify-center">
+          <Animated.View
+            className="h-full w-full items-center justify-center"
+            style={[animatedFoundOpacityStyle]}
+          >
             <PokemonPicture sprite={foundPokemon.sprite3d} />
-          </View>
+          </Animated.View>
         )}
         <Custom8BitRoundedBorders />
       </View>
@@ -103,13 +131,10 @@ export default function HuntingPage({
         </View>
         <View className="flex-1 w-full items-center justify-end mb-4 space-y-4">
           <View className="w-full h-12 items-center">
-            <PrimaryButton text="Catch" onPress={setRandomPoke} />
+            <PrimaryButton text="Catch" />
           </View>
           <View className="w-full h-12 items-center">
-            <PrimaryButton
-              text="Release"
-              onPress={() => setFoundPokemon(null)}
-            />
+            <PrimaryButton text="Release" onPress={() => startAnimation()} />
           </View>
         </View>
         <Custom8BitRoundedBorders />
