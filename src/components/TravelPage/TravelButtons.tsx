@@ -1,11 +1,13 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import PrimaryButton from '../Custom/PrimaryButton';
-import { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { useNavigation } from '@react-navigation/native';
+import { TravelPageScreenProps } from '@/routes/HomeNavigator';
 
 type Props = {
   nextIndex: () => void;
   previousIndex: () => void;
+  navigate: () => void;
 };
 
 export default function TravelButtons(props: Props) {
@@ -20,7 +22,7 @@ export default function TravelButtons(props: Props) {
         </View>
       </View>
       <View className="h-[35%] w-full justify-center items-center">
-        <PrimaryButton text="Go" />
+        <PrimaryButton text="Go" onPress={props.navigate} />
       </View>
     </View>
   );
