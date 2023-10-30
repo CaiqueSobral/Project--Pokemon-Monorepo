@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, View, Dimensions, Pressable } from 'react-native';
-import ContainerWithRoundedBorders from '../Custom/ContainerRoundedBorders';
 import Carousel from 'react-native-reanimated-carousel';
 import { Easing } from 'react-native-reanimated';
-import { cityImages } from '../../data/constants';
+import { WeatherContext } from '../../data/context/weatherContext';
+import ContainerWithRoundedBorders from '../Custom/ContainerRoundedBorders';
 
 type Props = {
-  isDay: boolean;
+  images: Array<string>;
 };
 
 export default function TravelingAnimation(props: Props) {
+  const {
+    currentWeather: {
+      weather: { isDay },
+    },
+  } = useContext(WeatherContext);
+
   const getSize = () => {
     return Dimensions.get('window').height * 0.45 >
       Dimensions.get('window').width * 0.9 - 8
@@ -24,7 +30,7 @@ export default function TravelingAnimation(props: Props) {
         <ContainerWithRoundedBorders>
           <Carousel
             width={size - 8}
-            data={cityImages}
+            data={props.images}
             autoPlay={true}
             scrollAnimationDuration={3000}
             autoPlayInterval={0}
@@ -61,7 +67,7 @@ export default function TravelingAnimation(props: Props) {
             />
             <Image
               source={
-                props.isDay
+                isDay
                   ? require('../../../assets/images/sky/day_sky.png')
                   : require('../../../assets/images/sky/night_sky.png')
               }
