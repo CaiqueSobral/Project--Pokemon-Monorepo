@@ -9,7 +9,7 @@ type Props = {
 };
 export default function ContainerWithRoundedBorders(props: Props) {
   return (
-    <View className="relative w-[100%] h-[100%] border-4 border-black items-center justify-center">
+    <View className="relative w-full h-full border-4 border-black items-center justify-center">
       {props.children}
       <Custom8BitRoundedBorders />
       {props.title && (
