@@ -19,6 +19,7 @@ import LoginPage from '../pages/LoginPage';
 import { PokemonInterface } from '../interfaces/Pokemon';
 import PokemonDexPage from '../pages/PokemonDexPage';
 import TravelPage from '../pages/TravelPage';
+import HuntingPage from '../pages/HuntingPage';
 
 type StackParamList = {
   LoginPage: undefined;
@@ -26,6 +27,7 @@ type StackParamList = {
   PokedexPage: undefined;
   PokemonDexPage: { pokemon: PokemonInterface };
   TravelPage: undefined;
+  HuntingPage: { habitatName: string };
 };
 
 type DrawerParamList = {
@@ -57,6 +59,11 @@ export type PokemonDexPageScreenProps = NativeStackScreenProps<
 export type TravelPageScreenProps = NativeStackScreenProps<
   StackParamList,
   'TravelPage'
+>;
+
+export type HuntingPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'HuntingPage'
 >;
 
 export type NavigationScreensProps = CompositeScreenProps<
@@ -103,6 +110,7 @@ export default function HomeStackNavigator() {
         component={PokemonDexPage}
       ></Stack.Screen>
       <Stack.Screen name="TravelPage" component={TravelPage}></Stack.Screen>
+      <Stack.Screen name="HuntingPage" component={HuntingPage}></Stack.Screen>
     </Stack.Navigator>
   );
 }
