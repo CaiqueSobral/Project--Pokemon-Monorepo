@@ -7,8 +7,9 @@ import PrimaryText from '../components/Custom/PrimaryText';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import TypesComponent from '../components/TravelPage/TypesComponent';
 import TravelButtons from '../components/TravelPage/TravelButtons';
+import { TravelPageScreenProps } from '@/routes/HomeNavigator';
 
-export default function TravelPage() {
+export default function TravelPage({ navigation }: TravelPageScreenProps) {
   const { habitats, pokemons } = useContext(PokemonsContext);
   const [index, setIndex] = useState(0);
 
@@ -149,7 +150,15 @@ export default function TravelPage() {
 
           <Custom8BitRoundedBorders />
         </View>
-        <TravelButtons nextIndex={next} previousIndex={previous} />
+        <TravelButtons
+          nextIndex={next}
+          previousIndex={previous}
+          navigate={() =>
+            navigation.navigate('HuntingPage', {
+              habitatName: capitalize(pokemonsHabitats[index].name),
+            })
+          }
+        />
       </View>
     </SafeAreaView>
   );
