@@ -99,7 +99,7 @@ export default function HuntingPage({
         ></PrimaryText>
       </View>
       <View
-        className="mt-8 border-4"
+        className="mt-6 border-4"
         style={{ width: size, height: size, opacity: 100 }}
       >
         {!foundPokemon && (
@@ -110,15 +110,18 @@ export default function HuntingPage({
 
         {foundPokemon && (
           <Animated.View
-            className="h-full w-full items-center justify-center"
+            className="h-full w-full"
             style={[animatedFoundOpacityStyle]}
           >
-            <PokemonPicture sprite={foundPokemon.sprite3d} />
+            <PokemonPicture sprite={foundPokemon.sprite3d} size={size} />
           </Animated.View>
         )}
         <Custom8BitRoundedBorders />
       </View>
-      <View className="flex-1 h-full w-[90%] border-4 mt-12 mb-8 items-center justify-center">
+      <View
+        style={{ width: size }}
+        className="flex-1 h-full border-4 mt-8 mb-6 items-center justify-center"
+      >
         <View className="h-1/5 w-3/4 justify-center my-4">
           <PrimaryText
             text={
