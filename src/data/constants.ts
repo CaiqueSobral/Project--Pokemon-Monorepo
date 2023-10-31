@@ -48,7 +48,7 @@ export const pokemonTypesColors = {
 export const HabitatsColors = {
   cave: '#5c4679',
   forest: '#859415',
-  grassland: '#868662',
+  grassland: '#629f3d',
   mountain: '#9b2520',
   'rough-terrain': '#b59951',
   sea: '#4f73c0',

@@ -5,7 +5,7 @@ import BackButton from '../components/Header/BackButton';
 import PrimaryText from '../components/Custom/PrimaryText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TravelingAnimation from '../components/HuntingPage/HuntingAnimation';
-import { cityImages } from '../data/constants';
+import { HabitatsColors, cityImages } from '../data/constants';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { PokemonInterface } from '../interfaces/Pokemon';
@@ -18,6 +18,7 @@ import Animated, {
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
+import capitalize from '../helpers/helperFunctions';
 
 function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   const randomId = Math.floor(Math.random() * pokemons.length);
@@ -34,10 +35,10 @@ export default function HuntingPage({
     return { opacity: imageOpacity.value };
   });
 
-  const HabitatName = route.params.habitatName;
+  const habitat = route.params.habitat;
   const { pokemons } = useContext(PokemonsContext);
   const pokemonsInHabitat = pokemons.filter(
-    (pokemon) => pokemon.habitat.toLowerCase() === HabitatName.toLowerCase(),
+    (pokemon) => pokemon.habitat.toLowerCase() === habitat.name.toLowerCase(),
   );
   const [foundPokemon, setFoundPokemon] = useState<PokemonInterface | null>(
     null,
@@ -47,6 +48,21 @@ export default function HuntingPage({
   };
   const clearFoundPokemon = () => {
     setFoundPokemon(null);
+  };
+
+  const getSize = () => {
+    return Dimensions.get('window').height * 0.45 >
+      Dimensions.get('window').width * 0.9 - 8
+      ? Dimensions.get('window').width * 0.9 - 8
+      : Dimensions.get('window').height * 0.45 - 8;
+  };
+  const size = Math.ceil(getSize());
+
+  const getColor = () => {
+    let key: keyof typeof HabitatsColors;
+    for (key in HabitatsColors) {
+      if (key === habitat.name.toLowerCase()) return HabitatsColors[key] + '90';
+    }
   };
 
   const resetOpacity = () => {
@@ -81,30 +97,28 @@ export default function HuntingPage({
     );
   }
 
-  const getSize = () => {
-    return Dimensions.get('window').height * 0.45 >
-      Dimensions.get('window').width * 0.9 - 8
-      ? Dimensions.get('window').width * 0.9 - 8
-      : Dimensions.get('window').height * 0.45 - 8;
-  };
-  const size = getSize();
-
   return (
-    <SafeAreaView className="flex-1 items-center">
+    <SafeAreaView
+      className="flex-1 items-center"
+      style={{ backgroundColor: getColor() }}
+    >
       <View className="h-[5%] w-[90%] mt-8 justify-center items-center">
         <BackButton navigation={navigation.goBack} />
         <PrimaryText
           classname="text-lg px-4 pt-[12] text-center"
-          text={HabitatName}
+          text={capitalize(habitat.name)}
         ></PrimaryText>
       </View>
       <View
-        className="mt-6 border-4"
-        style={{ width: size, height: size, opacity: 100 }}
+        className="mt-6 border-4 bg-white"
+        style={{ width: size, height: size }}
       >
         {!foundPokemon && (
-          <Animated.View className="flex-1" style={[animatedFoundOpacityStyle]}>
-            <TravelingAnimation images={cityImages} size={size} />
+          <Animated.View
+            className="flex-1 overflow-hidden"
+            style={[animatedFoundOpacityStyle]}
+          >
+            <TravelingAnimation images={habitat} size={size} />
           </Animated.View>
         )}
 
@@ -113,14 +127,18 @@ export default function HuntingPage({
             className="h-full w-full"
             style={[animatedFoundOpacityStyle]}
           >
-            <PokemonPicture sprite={foundPokemon.sprite3d} size={size} />
+            <PokemonPicture
+              sprite={foundPokemon.sprite3d}
+              size={size}
+              bg={habitat.sprite.bg}
+            />
           </Animated.View>
         )}
         <Custom8BitRoundedBorders />
       </View>
       <View
         style={{ width: size }}
-        className="flex-1 h-full border-4 mt-8 mb-6 items-center justify-center"
+        className="flex-1 h-full border-4 mt-8 mb-6 items-center justify-center bg-white"
       >
         <View className="h-1/5 w-3/4 justify-center my-4">
           <PrimaryText
@@ -129,7 +147,7 @@ export default function HuntingPage({
                 ? `A wild ${foundPokemon?.name} appeared!`
                 : 'Looking for pokémons'
             }
-            classname="text-[10px] pt-[6] text-center"
+            classname="text-xs pt-[8] text-center"
           />
         </View>
         <View className="flex-1 w-full items-center justify-end mb-4 space-y-4">
