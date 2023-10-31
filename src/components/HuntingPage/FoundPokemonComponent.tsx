@@ -14,10 +14,12 @@ type Props = {
     width: number;
   };
   size: number;
+  bg: string;
 };
 export default function PokemonPicture(props: Props) {
   const offsetPokemon = useSharedValue(0);
   const offsetTrainer = useSharedValue(0);
+  const offsetBg = useSharedValue(0);
 
   const animatePokemonStyle = useAnimatedStyle(() => {
     return {
@@ -30,6 +32,12 @@ export default function PokemonPicture(props: Props) {
     };
   });
 
+  const animateBgStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: -offsetBg.value }],
+    };
+  });
+
   React.useEffect(() => {
     offsetPokemon.value = withDelay(
       150,
@@ -37,12 +45,30 @@ export default function PokemonPicture(props: Props) {
     );
     offsetTrainer.value = withDelay(
       150,
-      withSpring(props.size / 2 - 8, { mass: 1, damping: 50 }),
+      withSpring(props.size / 2 - 16, { mass: 1, damping: 50 }),
+    );
+    offsetBg.value = withDelay(
+      150,
+      withSpring(-(props.size / 1.25 - props.size), { mass: 1, damping: 50 }),
     );
   });
 
   return (
     <>
+      <View
+        style={{ height: props.size - 8, width: props.size - 8 }}
+        className="absolute overflow-hidden"
+      >
+        <View className="w-full h-full opacity-50 bg-white"></View>
+        <Animated.Image
+          style={[
+            { height: props.size, width: props.size * 1.25 },
+            animateBgStyle,
+          ]}
+          source={{ uri: props.bg }}
+          className="opacity-40 left-0 absolute"
+        />
+      </View>
       <Animated.View
         style={[animatePokemonStyle]}
         className="h-1/2 w-2/3 absolute left-2 top-4"
