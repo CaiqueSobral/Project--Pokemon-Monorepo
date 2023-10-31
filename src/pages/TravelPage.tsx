@@ -8,6 +8,7 @@ import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBord
 import TypesComponent from '../components/TravelPage/TypesComponent';
 import TravelButtons from '../components/TravelPage/TravelButtons';
 import { TravelPageScreenProps } from '@/routes/HomeNavigator';
+import capitalize from '../helpers/helperFunctions';
 
 export default function TravelPage({ navigation }: TravelPageScreenProps) {
   const { habitats, pokemons } = useContext(PokemonsContext);
@@ -47,11 +48,7 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
       ? Dimensions.get('window').width * 0.9 - 4
       : Dimensions.get('window').height * 0.35 - 4;
   };
-  const size = getSize();
-
-  const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1, str.length);
-  };
+  const size = Math.ceil(getSize());
 
   const next = useCallback(() => {
     const currIndex = index;
@@ -106,7 +103,7 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
                   >
                     <Image
                       source={{
-                        uri: pokemonsHabitats[index].sprite,
+                        uri: pokemonsHabitats[index].sprite.main,
                       }}
                       resizeMode="cover"
                       className="h-full w-full"
@@ -155,7 +152,7 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
           previousIndex={previous}
           navigate={() =>
             navigation.navigate('HuntingPage', {
-              habitatName: capitalize(pokemonsHabitats[index].name),
+              habitat: pokemonsHabitats[index],
             })
           }
         />
