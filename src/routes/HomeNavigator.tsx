@@ -16,7 +16,7 @@ import {
 } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import LoginPage from '../pages/LoginPage';
-import { PokemonInterface } from '../interfaces/Pokemon';
+import { HabitatInterface, PokemonInterface } from '../interfaces/Pokemon';
 import PokemonDexPage from '../pages/PokemonDexPage';
 import TravelPage from '../pages/TravelPage';
 import HuntingPage from '../pages/HuntingPage';
@@ -27,7 +27,7 @@ type StackParamList = {
   PokedexPage: undefined;
   PokemonDexPage: { pokemon: PokemonInterface };
   TravelPage: undefined;
-  HuntingPage: { habitatName: string };
+  HuntingPage: { habitat: HabitatInterface };
 };
 
 type DrawerParamList = {

@@ -9,6 +9,7 @@ import { getImage } from '../firebase/firebaseStorage';
 import { getWeatherData } from './httpWeather';
 import { WeatherInterface } from '../interfaces/Weather';
 import { habitatsLocations } from '../data/constants';
+import capitalize from '../helpers/helperFunctions';
 
 const query = `query getPokemonsGen1 {
   gen_1: pokemon_v2_generation(where: {id: {_eq: 1}}) {
@@ -53,10 +54,6 @@ const pokemons: Array<PokemonInterface> = [];
 const evolutions: Array<EvolutionChainInterface> = [];
 const pokemonsHabitats: Array<HabitatInterface> = [];
 
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
   const {
@@ -89,7 +86,11 @@ async function arrangeHabitatsData(habitatsData: any) {
 
       const habitat: HabitatInterface = {
         name: habitatData.name,
-        sprite: await getImage(habitatData.name, 1),
+        sprite: {
+          main: await getImage('Habitats', habitatData.name, 'Main', 'jpg'),
+          bg: await getImage('Habitats', habitatData.name, 'Bg', 'jpg'),
+          ground: await getImage('Habitats', habitatData.name, 'Ground', 'png'),
+        },
         id: pokemonsHabitats.length,
         habitatWeather: await getHabitatWeather(habitatData.name),
       };

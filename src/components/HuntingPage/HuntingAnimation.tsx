@@ -1,28 +1,21 @@
-import React, { useContext } from 'react';
-import { Image, View, Dimensions, Pressable } from 'react-native';
-import ContainerWithRoundedBorders from '../Custom/ContainerRoundedBorders';
+import React from 'react';
+import { Image, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { Easing } from 'react-native-reanimated';
-import { WeatherContext } from '../../data/context/weatherContext';
+import { HabitatInterface } from '@/interfaces/Pokemon';
 
 type Props = {
   size: number;
-  images: Array<string>;
+  images: Pick<HabitatInterface, 'sprite'>;
 };
 
 export default function TravelingAnimation(props: Props) {
-  const {
-    currentWeather: {
-      weather: { isDay },
-    },
-  } = useContext(WeatherContext);
-
   return (
-    <Pressable className="flex-1 w-full h-full">
-      <View style={{ width: props.size, height: props.size - 8 }}>
+    <View className="flex-1 w-full h-full items-center justify-center">
+      <View style={{ width: props.size, height: props.size }}>
         <Carousel
-          width={props.size - 8}
-          data={props.images}
+          width={props.size}
+          data={[props.images.sprite.ground]}
           autoPlay={true}
           scrollAnimationDuration={3000}
           autoPlayInterval={0}
@@ -41,7 +34,7 @@ export default function TravelingAnimation(props: Props) {
               <View className="flex-1">
                 <Image
                   source={{ uri: item.item }}
-                  resizeMode="cover"
+                  resizeMode="contain"
                   className="w-full h-full"
                 />
               </View>
@@ -49,7 +42,7 @@ export default function TravelingAnimation(props: Props) {
           }}
         />
         <View
-          style={{ width: props.size - 8, height: props.size - 8 }}
+          style={{ width: props.size, height: props.size }}
           className="absolute"
         >
           <Image
@@ -58,16 +51,12 @@ export default function TravelingAnimation(props: Props) {
             className="w-full h-full"
           />
           <Image
-            source={
-              isDay
-                ? require('../../../assets/images/sky/day_sky.png')
-                : require('../../../assets/images/sky/night_sky.png')
-            }
+            source={{ uri: props.images.sprite.bg }}
             resizeMode="cover"
             className="absolute w-full h-full -z-50"
           />
         </View>
       </View>
-    </Pressable>
+    </View>
   );
 }

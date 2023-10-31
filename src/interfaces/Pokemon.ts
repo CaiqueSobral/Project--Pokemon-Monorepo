@@ -30,7 +30,11 @@ export interface EvolutionChainInterface {
 
 export interface HabitatInterface {
   name: string;
-  sprite: string;
+  sprite: {
+    main: string;
+    ground: string;
+    bg: string;
+  };
   id: number;
   habitatWeather: WeatherInterface;
 }

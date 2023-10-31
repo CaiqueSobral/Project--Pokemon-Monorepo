@@ -38,7 +38,7 @@ export default function HabitatComponent(props: Props) {
         >
           {actualHabitat && (
             <ImageBackground
-              source={{ uri: actualHabitat }}
+              source={{ uri: actualHabitat.main }}
               resizeMode="cover"
               className="absolute w-full h-full opacity-90"
             />
