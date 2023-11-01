@@ -110,7 +110,7 @@ export default function HuntingPage({
         ></PrimaryText>
       </View>
       <View
-        className="mt-6 border-4 bg-white"
+        className="mt-6 border-4 bg-gray-100"
         style={{ width: size, height: size }}
       >
         {!foundPokemon && (
