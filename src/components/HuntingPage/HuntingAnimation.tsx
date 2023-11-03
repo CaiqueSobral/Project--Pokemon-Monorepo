@@ -34,8 +34,8 @@ export default function TravelingAnimation(props: Props) {
               <View className="flex-1">
                 <Image
                   source={{ uri: item.item }}
+                  style={{ height: props.size, width: props.size + 1 }}
                   resizeMode="contain"
-                  className="w-full h-full"
                 />
               </View>
             );
