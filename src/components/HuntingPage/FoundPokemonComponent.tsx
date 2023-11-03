@@ -80,7 +80,7 @@ export default function PokemonPicture(props: Props) {
               className="w-full h-full opacity-85"
             />
           </View>
-          <View className="flex absolute items-center justify-center bottom-[15%]">
+          <View className="flex absolute items-center justify-center bottom-[10%]">
             <Image
               height={props.sprite.height * 1.5}
               width={props.sprite.width * 1.5}
