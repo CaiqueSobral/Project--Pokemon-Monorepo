@@ -98,6 +98,13 @@ export default function HuntingPage({
     );
   }
 
+  const selectedPokeballStyle = (index: number) => {
+    if (!foundPokemon) {
+      return { opacity: 0.3 };
+    }
+    return { opacity: index === selectedPokeball ? 1 : 0.3 };
+  };
+
   return (
     <SafeAreaView
       className="flex-1 items-center"
@@ -155,14 +162,19 @@ export default function HuntingPage({
           {pokeballs.map((pokeball, i) => {
             return (
               <View className="h-full w-[25%]" key={i}>
-                <Pressable className="flex-1">
+                <Pressable
+                  className="flex-1"
+                  onPress={() => (foundPokemon ? setSelectedPokeball(i) : null)}
+                >
                   <Image
                     source={{ uri: pokeball.sprite }}
+                    style={selectedPokeballStyle(i)}
                     resizeMode="contain"
                     className="h-3/4 w-full"
                   />
                   <View>
                     <PrimaryText
+                      style={selectedPokeballStyle(i)}
                       text={pokeball.name}
                       classname="text-center text-[8px]"
                     />
@@ -177,7 +189,10 @@ export default function HuntingPage({
             <PrimaryButton text="Catch" />
           </View>
           <View className="w-full h-12 items-center">
-            <PrimaryButton text="Run" onPress={() => startAnimation()} />
+            <PrimaryButton
+              text="Run"
+              onPress={() => (foundPokemon ? startAnimation() : null)}
+            />
           </View>
         </View>
         <Custom8BitRoundedBorders />
