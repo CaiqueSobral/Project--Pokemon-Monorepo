@@ -24,6 +24,21 @@ export const cityImages = [
   'https://i.pinimg.com/originals/50/37/fb/5037fbdb83789f718af306b1d23a51ab.png',
 ];
 
+export const pokeballs = [
+  {
+    name: 'Pokéball',
+    sprite: 'https://img.pokemondb.net/sprites/items/poke-ball.png',
+  },
+  {
+    name: 'Greatball',
+    sprite: 'https://img.pokemondb.net/sprites/items/great-ball.png',
+  },
+  {
+    name: 'Ultraball',
+    sprite: 'https://img.pokemondb.net/sprites/items/ultra-ball.png',
+  },
+];
+
 export const pokemonTypesColors = {
   normal: '#A8A77A',
   fire: '#EE8130',

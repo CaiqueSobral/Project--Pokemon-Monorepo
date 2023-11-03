@@ -1,11 +1,11 @@
 import { HuntingPageScreenProps } from '@/routes/HomeNavigator';
 import React, { useContext, useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Image, Pressable, View } from 'react-native';
 import BackButton from '../components/Header/BackButton';
 import PrimaryText from '../components/Custom/PrimaryText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TravelingAnimation from '../components/HuntingPage/HuntingAnimation';
-import { HabitatsColors, cityImages } from '../data/constants';
+import { HabitatsColors, pokeballs } from '../data/constants';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { PokemonInterface } from '../interfaces/Pokemon';
@@ -43,6 +43,7 @@ export default function HuntingPage({
   const [foundPokemon, setFoundPokemon] = useState<PokemonInterface | null>(
     null,
   );
+  const [selectedPokeball, setSelectedPokeball] = useState(0);
   const setRandomPokemon = () => {
     setFoundPokemon(getRandomPokemon(pokemonsInHabitat));
   };
@@ -140,7 +141,7 @@ export default function HuntingPage({
         style={{ width: size }}
         className="flex-1 h-full border-4 mt-8 mb-6 items-center justify-center bg-white"
       >
-        <View className="h-1/5 w-3/4 justify-center my-4">
+        <View className="h-1/5 w-4/5 justify-center my-4">
           <PrimaryText
             text={
               foundPokemon
@@ -150,12 +151,33 @@ export default function HuntingPage({
             classname="text-xs pt-[8] text-center"
           />
         </View>
-        <View className="flex-1 w-full items-center justify-end mb-4 space-y-4">
+        <View className="h-1/4 w-full flex-row justify-evenly">
+          {pokeballs.map((pokeball, i) => {
+            return (
+              <View className="h-full w-[25%]" key={i}>
+                <Pressable className="flex-1">
+                  <Image
+                    source={{ uri: pokeball.sprite }}
+                    resizeMode="contain"
+                    className="h-3/4 w-full"
+                  />
+                  <View>
+                    <PrimaryText
+                      text={pokeball.name}
+                      classname="text-center text-[8px]"
+                    />
+                  </View>
+                </Pressable>
+              </View>
+            );
+          })}
+        </View>
+        <View className="flex-1 w-full items-center justify-end pb-4 space-y-4">
           <View className="w-full h-12 items-center">
             <PrimaryButton text="Catch" />
           </View>
           <View className="w-full h-12 items-center">
-            <PrimaryButton text="Release" onPress={() => startAnimation()} />
+            <PrimaryButton text="Run" onPress={() => startAnimation()} />
           </View>
         </View>
         <Custom8BitRoundedBorders />
