@@ -44,6 +44,7 @@ export default function HuntingPage({
     null,
   );
   const [selectedPokeball, setSelectedPokeball] = useState(0);
+  const [tryToCatch, setTryToCatch] = useState(false);
   const setRandomPokemon = () => {
     setFoundPokemon(getRandomPokemon(pokemonsInHabitat));
   };
@@ -105,6 +106,14 @@ export default function HuntingPage({
     return { opacity: index === selectedPokeball ? 1 : 0.3 };
   };
 
+  const catchPokemon = () => {
+    setTryToCatch(true);
+    const interval = setInterval(() => {
+      setTryToCatch(false);
+      clearInterval(interval);
+    }, 1000);
+  };
+
   return (
     <SafeAreaView
       className="flex-1 items-center"
@@ -132,13 +141,14 @@ export default function HuntingPage({
 
         {foundPokemon && (
           <Animated.View
-            className="h-full w-full"
+            className="h-full w-full overflow-hidden"
             style={[animatedFoundOpacityStyle]}
           >
             <PokemonPicture
               sprite={foundPokemon.sprite3d}
               size={size}
               bg={habitat.sprite.bg}
+              captureTry={tryToCatch}
             />
           </Animated.View>
         )}
@@ -186,7 +196,10 @@ export default function HuntingPage({
         </View>
         <View className="flex-1 w-full items-center justify-end pb-4 space-y-4">
           <View className="w-full h-12 items-center">
-            <PrimaryButton text="Catch" />
+            <PrimaryButton
+              text="Catch"
+              onPress={() => (foundPokemon ? catchPokemon() : null)}
+            />
           </View>
           <View className="w-full h-12 items-center">
             <PrimaryButton

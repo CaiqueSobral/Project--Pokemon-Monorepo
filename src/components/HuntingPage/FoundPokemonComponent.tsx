@@ -15,6 +15,7 @@ type Props = {
   };
   size: number;
   bg: string;
+  captureTry: boolean;
 };
 export default function PokemonPicture(props: Props) {
   const offsetPokemon = useSharedValue(0);
@@ -45,7 +46,7 @@ export default function PokemonPicture(props: Props) {
     );
     offsetTrainer.value = withDelay(
       150,
-      withSpring(props.size / 2 - 16, { mass: 1, damping: 50 }),
+      withSpring(props.size / 2 - 32, { mass: 1, damping: 50 }),
     );
     offsetBg.value = withDelay(
       150,
@@ -94,7 +95,11 @@ export default function PokemonPicture(props: Props) {
         className="h-2/3 w-2/3 absolute -bottom-[2] right-0"
       >
         <Image
-          source={require('../../../assets/images/trainer-back.png')}
+          source={
+            props.captureTry
+              ? require('../../../assets/images/trainer-throwing.gif')
+              : require('../../../assets/images/trainer-back.png')
+          }
           resizeMode="contain"
           className="h-full w-full"
         />
