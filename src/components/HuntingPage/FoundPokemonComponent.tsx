@@ -1,10 +1,15 @@
-import React from 'react';
-import { Image, View } from 'react-native';
+import { pokeballs } from '../../data/constants';
+import React, { useState } from 'react';
+import { Image, LayoutChangeEvent, View } from 'react-native';
 import Animated, {
+  Easing,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
+  withSequence,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 
 type Props = {
@@ -21,6 +26,8 @@ export default function PokemonPicture(props: Props) {
   const offsetPokemon = useSharedValue(0);
   const offsetTrainer = useSharedValue(0);
   const offsetBg = useSharedValue(0);
+  const offsetPokeball = useSharedValue({ x: -50, y: 40 });
+  const [pokeballVisible, setPokeballVisible] = useState(false);
 
   const animatePokemonStyle = useAnimatedStyle(() => {
     return {
@@ -39,6 +46,15 @@ export default function PokemonPicture(props: Props) {
     };
   });
 
+  const animatePokeball = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: offsetPokeball.value.x },
+        { translateY: offsetPokeball.value.y },
+      ],
+    };
+  });
+
   React.useEffect(() => {
     offsetPokemon.value = withDelay(
       150,
@@ -53,6 +69,33 @@ export default function PokemonPicture(props: Props) {
       withSpring(-(props.size / 1.25 - props.size), { mass: 1, damping: 50 }),
     );
   });
+
+  const toggleVisiblePokeball = () => {
+    setPokeballVisible((oldValue) => !oldValue);
+    offsetPokeball.value = withTiming({ x: -50, y: 40 });
+  };
+
+  if (props.captureTry) {
+    setTimeout(() => {
+      setPokeballVisible(true);
+    }, 600);
+    offsetPokeball.value = withSequence(
+      withTiming({ x: 0, y: 0 }, { duration: 350 }),
+      withTiming(
+        { x: 0, y: -30 },
+        {
+          duration: 350,
+        },
+        (finished) => finished && runOnJS(toggleVisiblePokeball)(),
+      ),
+      //withSpring({ x: 0, y: 35 }, { mass: 1, damping: 20, stiffness: 500 }),
+      /*withTiming(
+        { x: -50, y: 40 },
+        { duration: 500 },
+        (finished) => finished && runOnJS(toggleVisiblePokeball)(),
+      ),*/
+    );
+  }
 
   return (
     <>
@@ -87,6 +130,15 @@ export default function PokemonPicture(props: Props) {
               width={props.sprite.width * 1.5}
               source={{ uri: props.sprite.uri }}
             />
+            {pokeballVisible && (
+              <Animated.Image
+                height={48}
+                width={48}
+                source={{ uri: pokeballs[0].sprite }}
+                style={[animatePokeball]}
+                className="absolute"
+              />
+            )}
           </View>
         </View>
       </Animated.View>
