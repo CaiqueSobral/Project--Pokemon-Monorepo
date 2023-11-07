@@ -27,14 +27,17 @@ export const cityImages = [
 export const pokeballs = [
   {
     name: 'Pokéball',
+    modifier: 0,
     sprite: 'https://img.pokemondb.net/sprites/items/poke-ball.png',
   },
   {
     name: 'Greatball',
+    modifier: 15,
     sprite: 'https://img.pokemondb.net/sprites/items/great-ball.png',
   },
   {
     name: 'Ultraball',
+    modifier: 30,
     sprite: 'https://img.pokemondb.net/sprites/items/ultra-ball.png',
   },
 ];
