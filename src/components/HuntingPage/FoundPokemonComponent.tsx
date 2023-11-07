@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Image, LayoutChangeEvent, View } from 'react-native';
 import Animated, {
   Easing,
+  cancelAnimation,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -60,12 +61,6 @@ export default function PokemonPicture(props: Props) {
   });
 
   React.useEffect(() => {
-    pokeballRotation.value = withRepeat(
-      withTiming(1, {
-        duration: 400,
-      }),
-      -1,
-    );
     offsetPokemon.value = withDelay(
       150,
       withSpring(props.size / 3 - 16, { mass: 1, damping: 50 }),
@@ -83,7 +78,19 @@ export default function PokemonPicture(props: Props) {
   if (props.captureTry) {
     setTimeout(() => {
       setPokeballVisible(true);
-      offsetPokeball.value = withTiming({ x: 0, y: 0 }, { duration: 400 });
+      offsetPokeball.value = withTiming(
+        { x: 0, y: 0 },
+        { duration: 400 },
+        (finished) => {
+          if (finished) {
+            cancelAnimation(pokeballRotation);
+          }
+        },
+      );
+      pokeballRotation.value = withRepeat(
+        withTiming(1, { duration: 500, easing: Easing.linear }),
+        -1,
+      );
     }, 600);
   }
 

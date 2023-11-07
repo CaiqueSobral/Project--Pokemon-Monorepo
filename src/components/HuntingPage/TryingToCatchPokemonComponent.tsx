@@ -25,10 +25,15 @@ export default function TryingToCatchPokemon(props: Props) {
   const [gotcha, setGotcha] = useState<boolean | null>(null);
 
   const showGotcha = () => {
-    setGotchaMessage(
-      props.gotPokemon ? 'GOTCHA!!!' : `${props.pokemon} got away!`,
+    setTimeout(
+      () => {
+        setGotchaMessage(
+          props.gotPokemon ? 'GOTCHA!!!' : `${props.pokemon} got away!`,
+        );
+        setGotcha(props.gotPokemon);
+      },
+      props.gotPokemon ? 0 : 500,
     );
-    setGotcha(props.gotPokemon);
   };
 
   const animatedPokeball = useAnimatedStyle(() => {
@@ -97,8 +102,8 @@ export default function TryingToCatchPokemon(props: Props) {
           />
         </View>
         {gotcha != null && (
-          <View className="w-3/4 h-1/4 absolute top-[20%] bg-white opacity-70 border-4 items-center justify-center">
-            <PrimaryText text={gotchaMessage} classname="pt-[8]" />
+          <View className="w-3/4 h-1/6 absolute top-[15%] bg-white opacity-70 border-4 items-center justify-center">
+            <PrimaryText text={gotchaMessage} classname="pt-[8] text-xs" />
             <Custom8BitRoundedBorders />
           </View>
         )}

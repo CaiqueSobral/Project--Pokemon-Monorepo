@@ -19,6 +19,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import capitalize from '../helpers/helperFunctions';
+import TryingToCatchPokemon from '../components/HuntingPage/TryingToCatchPokemonComponent';
 
 function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   const randomId = Math.floor(Math.random() * pokemons.length);
@@ -34,23 +35,23 @@ export default function HuntingPage({
   const animatedFoundOpacityStyle = useAnimatedStyle(() => {
     return { opacity: imageOpacity.value };
   });
+  const resetOpacity = () => {
+    imageOpacity.value = 100; //withSpring(100, { mass: 1, damping: 25 });
+  };
 
   const habitat = route.params.habitat;
   const { pokemons } = useContext(PokemonsContext);
   const pokemonsInHabitat = pokemons.filter(
     (pokemon) => pokemon.habitat.toLowerCase() === habitat.name.toLowerCase(),
   );
+  const [selectedPokeball, setSelectedPokeball] = useState(0);
+  const [tryToCatch, setTryToCatch] = useState(false);
+  const [statusTrainer, setStatusTrainer] = useState<
+    'Looking' | 'Found' | 'Trying to Catch'
+  >('Looking');
   const [foundPokemon, setFoundPokemon] = useState<PokemonInterface | null>(
     null,
   );
-  const [selectedPokeball, setSelectedPokeball] = useState(0);
-  const [tryToCatch, setTryToCatch] = useState(false);
-  const setRandomPokemon = () => {
-    setFoundPokemon(getRandomPokemon(pokemonsInHabitat));
-  };
-  const clearFoundPokemon = () => {
-    setFoundPokemon(null);
-  };
 
   const getSize = () => {
     return Dimensions.get('window').height * 0.45 >
@@ -67,50 +68,63 @@ export default function HuntingPage({
     }
   };
 
-  const resetOpacity = () => {
-    imageOpacity.value = withSpring(100, { mass: 1, damping: 25 });
-  };
-  const startAnimation = () => {
+  const startAnimation = (runWhenFinished: () => void) => {
     imageOpacity.value = withRepeat(
       withSpring(imageOpacity.value === 100 ? 0 : 100),
       1,
       false,
       (finished) => {
         if (finished) {
-          if (!foundPokemon) {
-            runOnJS(setRandomPokemon)();
-            runOnJS(resetOpacity)();
-          } else {
-            runOnJS(clearFoundPokemon)();
-            runOnJS(resetOpacity)();
-          }
+          runOnJS(runWhenFinished)();
+          runOnJS(resetOpacity)();
         }
       },
     );
   };
 
-  if (!foundPokemon) {
-    const interval = setInterval(
-      () => {
-        startAnimation();
-        clearInterval(interval);
-      },
-      Math.floor(Math.random() * 4000 + 2000),
-    );
-  }
-
   const selectedPokeballStyle = (index: number) => {
-    if (!foundPokemon) {
+    if (statusTrainer != 'Found') {
       return { opacity: 0.3 };
     }
     return { opacity: index === selectedPokeball ? 1 : 0.3 };
   };
 
+  if (!foundPokemon) {
+    setFoundPokemon(getRandomPokemon(pokemonsInHabitat));
+    setTimeout(
+      () => {
+        startAnimation(() => {
+          setStatusTrainer('Found');
+        });
+      },
+      Math.floor(Math.random() * 4000 + 2000),
+    );
+  }
+
+  const releasePokemon = () => {
+    startAnimation(() => {
+      setFoundPokemon(null);
+      setStatusTrainer('Looking');
+    });
+  };
+
+  const isPokemonCaught = (pokemon: PokemonInterface) => {
+    const number =
+      Math.floor(Math.random() * 250 + 1) -
+      pokeballs[selectedPokeball].modifier;
+    return number <= pokemon.captureRate;
+  };
+
   const catchPokemon = () => {
     setTryToCatch(true);
-    const interval = setInterval(() => {
+    setTimeout(() => {
       setTryToCatch(false);
-      clearInterval(interval);
+      startAnimation(() => {
+        setStatusTrainer('Trying to Catch');
+        setTimeout(() => {
+          releasePokemon();
+        }, 6000);
+      });
     }, 1000);
   };
 
@@ -130,7 +144,7 @@ export default function HuntingPage({
         className="mt-6 border-4 bg-gray-100"
         style={{ width: size, height: size }}
       >
-        {!foundPokemon && (
+        {statusTrainer === 'Looking' && (
           <Animated.View
             className="flex-1 overflow-hidden"
             style={[animatedFoundOpacityStyle]}
@@ -139,7 +153,7 @@ export default function HuntingPage({
           </Animated.View>
         )}
 
-        {foundPokemon && (
+        {statusTrainer === 'Found' && foundPokemon && (
           <Animated.View
             className="h-full w-full overflow-hidden"
             style={[animatedFoundOpacityStyle]}
@@ -149,6 +163,22 @@ export default function HuntingPage({
               size={size}
               bg={habitat.sprite.bg}
               captureTry={tryToCatch}
+              usedPokeball={pokeballs[selectedPokeball].sprite}
+            />
+          </Animated.View>
+        )}
+
+        {statusTrainer === 'Trying to Catch' && foundPokemon && (
+          <Animated.View
+            className="h-full w-full overflow-hidden"
+            style={[animatedFoundOpacityStyle]}
+          >
+            <TryingToCatchPokemon
+              pokemon={foundPokemon.name}
+              gotPokemon={isPokemonCaught(foundPokemon)}
+              usedPokeball={pokeballs[selectedPokeball].sprite}
+              size={size}
+              bg={habitat.sprite.bg}
             />
           </Animated.View>
         )}
@@ -161,9 +191,9 @@ export default function HuntingPage({
         <View className="h-1/5 w-4/5 justify-center my-4">
           <PrimaryText
             text={
-              foundPokemon
-                ? `A wild ${foundPokemon?.name} appeared!`
-                : 'Looking for pokémons'
+              statusTrainer != 'Looking' && foundPokemon
+                ? `A wild ${foundPokemon.name} appeared`
+                : 'Looking for Pokémons'
             }
             classname="text-xs pt-[8] text-center"
           />
@@ -174,7 +204,9 @@ export default function HuntingPage({
               <View className="h-full w-[25%]" key={i}>
                 <Pressable
                   className="flex-1"
-                  onPress={() => (foundPokemon ? setSelectedPokeball(i) : null)}
+                  onPress={() =>
+                    statusTrainer === 'Found' ? setSelectedPokeball(i) : null
+                  }
                 >
                   <Image
                     source={{ uri: pokeball.sprite }}
@@ -198,13 +230,17 @@ export default function HuntingPage({
           <View className="w-full h-12 items-center">
             <PrimaryButton
               text="Catch"
-              onPress={() => (foundPokemon ? catchPokemon() : null)}
+              onPress={() =>
+                statusTrainer === 'Found' ? catchPokemon() : null
+              }
             />
           </View>
           <View className="w-full h-12 items-center">
             <PrimaryButton
               text="Run"
-              onPress={() => (foundPokemon ? startAnimation() : null)}
+              onPress={() =>
+                statusTrainer === 'Found' ? releasePokemon() : null
+              }
             />
           </View>
         </View>
