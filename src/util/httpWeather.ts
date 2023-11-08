@@ -1,7 +1,5 @@
 import { weatherIcons } from '../data/constants';
 import { WeatherInterface } from '../interfaces/Weather';
-import { WEATHER_API_KEY } from '@env';
-import Constants from 'expo-constants';
 import axios from 'axios';
 
 const url = 'http://api.weatherapi.com/v1/current.json';
@@ -62,10 +60,7 @@ const weatherConditions = {
 export async function getWeatherData(coords: Array<number>) {
   const { data } = await axios.get(url, {
     params: {
-      key:
-        process.env.WEATHER_API_KEY ||
-        WEATHER_API_KEY ||
-        Constants.expoConfig?.extra?.WEATHER_API_KEY,
+      key: process.env.EXPO_PUBLIC_WEATHER_API_KEY,
       q: `${coords[0]},${coords[1]}`,
     },
   });

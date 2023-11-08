@@ -74,7 +74,7 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
 
   const carouselRef = useRef<FlatList>(null);
   return (
-    <SafeAreaView className="flex-1 items-center">
+    <SafeAreaView className="flex-1 items-center bg-white">
       <Header title="Travel" />
       <View className="flex-1 w-[90%] items-center">
         <View className="h-4/5 w-full border-4 mb-2 mt-4">

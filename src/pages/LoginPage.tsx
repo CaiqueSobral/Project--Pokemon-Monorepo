@@ -53,7 +53,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
   return (
     <>
       {modalActive && <LoadingModal />}
-      <SafeAreaView className="flex-1 p-4">
+      <SafeAreaView className="flex-1 p-4 bg-white">
         <View className="flex-1">
           <View className="flex-1">
             <Image
