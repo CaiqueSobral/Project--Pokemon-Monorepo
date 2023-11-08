@@ -30,7 +30,10 @@ export function App() {
   return (
     <IndexContextProvider>
       <NavigationContainer>
-        <SafeAreaProvider className="flex-1" onLayout={onLayoutRootView}>
+        <SafeAreaProvider
+          className="flex-1 bg-white"
+          onLayout={onLayoutRootView}
+        >
           <RootNavigator />
         </SafeAreaProvider>
       </NavigationContainer>
