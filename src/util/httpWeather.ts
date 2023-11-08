@@ -58,12 +58,16 @@ const weatherConditions = {
 };
 
 export async function getWeatherData(coords: Array<number>) {
-  const { data } = await axios.get(url, {
-    params: {
-      key: process.env.EXPO_PUBLIC_WEATHER_API_KEY,
-      q: `${coords[0]},${coords[1]}`,
-    },
-  });
+  const { data } = await axios
+    .get(url, {
+      params: {
+        key: process.env.EXPO_PUBLIC_WEATHER_API_KEY,
+        q: `${coords[0]},${coords[1]}`,
+      },
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
 
   const weather: WeatherInterface = {
     location: {

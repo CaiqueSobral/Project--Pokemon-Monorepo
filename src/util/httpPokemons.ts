@@ -60,10 +60,14 @@ export async function getAllPokemons() {
     data: {
       data: { gen_1, evolution_chain, habitats },
     },
-  } = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
-    headers: headers,
-    query: query,
-  });
+  } = await axios
+    .post('https://beta.pokeapi.co/graphql/v1beta', {
+      headers: headers,
+      query: query,
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
 
   await arrangePokemonData(gen_1);
   arrangeEvolutionData(evolution_chain);
