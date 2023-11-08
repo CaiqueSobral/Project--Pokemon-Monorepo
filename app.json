@@ -16,13 +16,11 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow ReactMon to use your location."
+          "locationAlwaysAndWhenInUsePermission": "Allow PokeNative to use your location."
         }
       ]
     ],
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
