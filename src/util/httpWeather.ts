@@ -60,9 +60,15 @@ const weatherConditions = {
 };
 
 export async function getWeatherData(coords: Array<number>) {
+  console.log(process.env.WEATHER_API_KEY);
+  console.log(Constants.expoConfig?.extra?.WEATHER_API_KEY);
+  console.log(WEATHER_API_KEY);
   const { data } = await axios.get(url, {
     params: {
-      key: Constants.expoConfig?.extra?.WEATHER_API_KEY,
+      key:
+        process.env.WEATHER_API_KEY ||
+        WEATHER_API_KEY ||
+        Constants.expoConfig?.extra?.WEATHER_API_KEY,
       q: `${coords[0]},${coords[1]}`,
     },
   });
