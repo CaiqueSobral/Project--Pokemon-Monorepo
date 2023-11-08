@@ -1,8 +1,9 @@
 import { FIREBASE_API_KEY } from '@env';
+import Constants from 'expo-constants';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: FIREBASE_API_KEY,
+  apiKey: Constants.expoConfig?.extra?.FIREBASE_API_KEY,
   authDomain: 'pokenative-aa1af.firebaseapp.com',
   projectId: 'pokenative-aa1af',
   storageBucket: 'pokenative-aa1af.appspot.com',
