@@ -1,6 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header/Header';
-import { NavigationScreensProps } from '../routes/HomeNavigator';
 import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { WeatherContext } from '../data/context/weatherContext';

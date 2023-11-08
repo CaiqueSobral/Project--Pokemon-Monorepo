@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { LoginPageScreenProps } from '../routes/HomeNavigator';
-import { Dimensions, Image, Text, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { WeatherContext } from '../data/context/weatherContext';
 import * as Location from 'expo-location';

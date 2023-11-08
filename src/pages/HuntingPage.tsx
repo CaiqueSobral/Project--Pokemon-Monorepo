@@ -1,6 +1,6 @@
 import { HuntingPageScreenProps } from '@/routes/HomeNavigator';
 import React, { useContext, useState } from 'react';
-import { Dimensions, Image, Pressable, View } from 'react-native';
+import { Dimensions, Pressable, View, Image } from 'react-native';
 import BackButton from '../components/Header/BackButton';
 import PrimaryText from '../components/Custom/PrimaryText';
 import { SafeAreaView } from 'react-native-safe-area-context';

@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header/Header';
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { Dimensions, FlatList, Image, Text, View } from 'react-native';
+import { Dimensions, FlatList, Image, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import PrimaryText from '../components/Custom/PrimaryText';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';

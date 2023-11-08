@@ -1,6 +1,5 @@
 export default {
   expo: {
-    entryPoint: './src/App.tsx',
     name: 'ProjectPokemonReactApp',
     slug: 'ProjectPokemonReactApp',
     version: '1.0.0',

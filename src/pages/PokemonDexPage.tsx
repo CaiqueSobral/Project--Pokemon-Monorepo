@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import BackButton from '../components/Header/BackButton';
 import { pokemonTypesColors } from '../data/constants';
-import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import ContainerWithRoundedBorders from '../components/Custom/ContainerRoundedBorders';
 import PrimaryText from '../components/Custom/PrimaryText';
 import TypesComponent from '../components/PokemonPage/TypesComponent';
