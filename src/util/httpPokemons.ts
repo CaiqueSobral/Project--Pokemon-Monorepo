@@ -1,4 +1,3 @@
-import { Image } from 'react-native';
 import {
   EvolutionChainInterface,
   HabitatInterface,
@@ -10,6 +9,7 @@ import { getWeatherData } from './httpWeather';
 import { WeatherInterface } from '../interfaces/Weather';
 import { habitatsLocations } from '../data/constants';
 import capitalize from '../helpers/helperFunctions';
+import { Image } from 'react-native/Libraries/Image/Image';
 
 const query = `query getPokemonsGen1 {
   gen_1: pokemon_v2_generation(where: {id: {_eq: 1}}) {
