@@ -5,6 +5,7 @@
 # dependencies
 *node_modules/
 *.env
+*certificate.json
 
 # Expo
 *.expo/
