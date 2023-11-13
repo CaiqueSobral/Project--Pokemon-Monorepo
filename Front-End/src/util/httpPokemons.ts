@@ -12,26 +12,6 @@ import capitalize from '../helpers/helperFunctions';
 import { Image } from 'react-native';
 
 const query = `query getPokemonsGen1 {
-  gen_1: pokemon_v2_generation(where: {id: {_eq: 1}}) {
-    pokemons: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
-      id
-      pokemon: pokemon_v2_pokemons(where: {is_default: {_eq: true}}) {
-        name
-        weight
-        height
-        types: pokemon_v2_pokemontypes {
-          type: pokemon_v2_type {
-            name
-          }
-        }
-      }
-      capture_rate
-      evolution_chain_id
-      habitat: pokemon_v2_pokemonhabitat {
-        name
-      }
-    }
-  }
   evolution_chain: pokemon_v2_evolutionchain(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {
     id
     species: pokemon_v2_pokemonspecies(where: {is_baby: {_eq: false}, pokemon_v2_generation: {id: {_eq: 1}}}) {
@@ -58,18 +38,20 @@ export async function getAllPokemons() {
   console.log('Getting Pokemons...');
   const {
     data: {
-      data: { gen_1, evolution_chain, habitats },
+      data: { evolution_chain, habitats },
     },
-  } = await axios
-    .post('https://beta.pokeapi.co/graphql/v1beta', {
-      headers: headers,
-      query: query,
-    })
-    .catch((e) => {
-      throw new Error(e);
-    });
+  } = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
+    headers: headers,
+    query: query,
+  });
 
-  await arrangePokemonData(gen_1);
+  const pokemonsResponse = await axios
+    .get('http://192.168.15.22:3000/api/pokemons')
+    .catch((e) => console.log(e));
+  pokemonsResponse?.data.map((pokemon: PokemonInterface) => {
+    pokemons.push(pokemon);
+  });
+
   arrangeEvolutionData(evolution_chain);
   await arrangeHabitatsData(habitats);
 
