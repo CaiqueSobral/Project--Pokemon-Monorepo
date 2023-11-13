@@ -14,7 +14,12 @@ export interface PokemonInterface {
   captureRate: number;
   evolutionChainId: number;
   habitat: string;
-  types: Array<{ type: string; color: string }>;
+  types: Array<pokemonTypes>;
+}
+
+export interface pokemonTypes {
+  type: string;
+  color: string;
 }
 
 export interface EvolutionChainInterface {

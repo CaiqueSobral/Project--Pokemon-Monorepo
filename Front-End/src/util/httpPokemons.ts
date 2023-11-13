@@ -45,13 +45,7 @@ export async function getAllPokemons() {
     query: query,
   });
 
-  const pokemonsResponse = await axios
-    .get('http://192.168.15.22:3000/api/pokemons')
-    .catch((e) => console.log(e));
-  pokemonsResponse?.data.map((pokemon: PokemonInterface) => {
-    pokemons.push(pokemon);
-  });
-
+  arrangePokemonsData();
   arrangeEvolutionData(evolution_chain);
   await arrangeHabitatsData(habitats);
 
@@ -61,6 +55,12 @@ export async function getAllPokemons() {
     evolutions: evolutions,
     habitats: pokemonsHabitats,
   };
+}
+
+async function arrangePokemonsData(): Promise<void> {
+  const { data } = await axios.get('http://192.168.15.22:3000/api/pokemons');
+
+  pokemons.push(...data);
 }
 
 async function arrangeHabitatsData(habitatsData: any) {
@@ -116,45 +116,6 @@ function arrangeEvolutionData(evolution_chain: any) {
           .sort((a: Specie, b: Specie) => a.id - b.id),
       };
       evolutions.splice(evolutionChain.id, 0, evolutionChain);
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-async function arrangePokemonData(gen_1: any) {
-  try {
-    for (const item in gen_1[0].pokemons) {
-      const pokemonData = gen_1[0].pokemons[item];
-
-      const pokemon: PokemonInterface = {
-        id: pokemonData.id,
-        name: capitalize(pokemonData.pokemon[0].name)
-          .replace('n-f', 'n ♀')
-          .replace('n-m', 'n ♂'),
-        height: pokemonData.pokemon[0].height * 10,
-        weight: pokemonData.pokemon[0].weight / 10,
-        sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${pokemonData.pokemon[0].name}.png`,
-        sprite3d: {
-          uri: `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
-          height: 0,
-          width: 0,
-        },
-        captureRate: pokemonData.capture_rate,
-        evolutionChainId: pokemonData.evolution_chain_id,
-        habitat: capitalize(pokemonData.habitat.name),
-        types: pokemonData.pokemon[0].types.map(
-          (e: { type: { name: string } }) => e.type.name,
-        ),
-      };
-      await Image.getSize(
-        `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemonData.pokemon[0].name}.gif`,
-        (w, h) => {
-          pokemon.sprite3d.width = w;
-          pokemon.sprite3d.height = h;
-        },
-      );
-      pokemons.splice(pokemon.id, 0, pokemon);
     }
   } catch (e) {
     console.log(e);

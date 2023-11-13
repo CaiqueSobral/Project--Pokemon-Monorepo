@@ -2,10 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
+import { pokemonTypes } from '../../interfaces/Pokemon';
+import capitalize from '../../helpers/helperFunctions';
 
 type Props = {
-  types: Array<string>;
-  colors: Array<string>;
+  types: Array<pokemonTypes>;
 };
 
 export default function TypesComponent(props: Props) {
@@ -20,10 +21,10 @@ export default function TypesComponent(props: Props) {
             <View
               key={i}
               className="h-6 w-1/3 items-center justify-center"
-              style={{ backgroundColor: props.colors[i] }}
+              style={{ backgroundColor: type.color }}
             >
               <PrimaryText
-                text={type.charAt(0).toUpperCase() + type.slice(1)}
+                text={capitalize(type.type)}
                 classname="text-[10px] pt-[4] text-white"
               />
               <Custom8BitBorders />

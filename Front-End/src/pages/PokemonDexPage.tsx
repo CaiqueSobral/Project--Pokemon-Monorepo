@@ -23,13 +23,9 @@ export default function PokemonDexPage({
 
   const getColors = () => {
     colors.splice(0, colors.length);
-    let key: keyof typeof pokemonTypesColors;
-    for (const type in pokemon.types) {
-      for (key in pokemonTypesColors) {
-        if (key === pokemon.types[type]) {
-          colors.push(pokemonTypesColors[key]);
-        }
-      }
+
+    for (const item in pokemon.types) {
+      colors.push(pokemon.types[item].color);
     }
 
     return colors.length > 1
@@ -56,7 +52,7 @@ export default function PokemonDexPage({
                 text={`#${pokemon.id}`}
               />
               <View className="flex h-2/5 mt-6">
-                <TypesComponent types={pokemon.types} colors={colors} />
+                <TypesComponent types={pokemon.types} />
                 <MassComponent
                   height={pokemon.height}
                   weight={pokemon.weight}
