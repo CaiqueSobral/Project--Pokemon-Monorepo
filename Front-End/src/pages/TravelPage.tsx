@@ -22,7 +22,7 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
         pokemon.habitat.toLowerCase() === pokemonsHabitats[index].name,
     )
     .map((pokemon) => {
-      return pokemon.types[0];
+      return pokemon.types[0].type;
     });
 
   const getMostTypes = (types: Array<string>) => {
