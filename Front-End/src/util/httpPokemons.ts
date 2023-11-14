@@ -28,6 +28,9 @@ const pokemonsHabitats: Array<HabitatInterface> = [];
 
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
+
+  const url = 'http://192.168.15.22:3000/api';
+
   const {
     data: {
       data: { habitats },
@@ -37,9 +40,13 @@ export async function getAllPokemons() {
     query: query,
   });
 
-  await arrangePokemonsData();
-  await arrangeEvolutionsData();
-  await arrangeHabitatsData(habitats);
+  Promise.all([
+    arrangePokemonsData(url),
+    arrangeEvolutionsData(url),
+    arrangeHabitatsData(habitats),
+  ]).catch((e) => {
+    throw new Error('Internal server error\n' + e);
+  });
 
   console.log('Pokemons loaded!');
   return {
@@ -49,14 +56,14 @@ export async function getAllPokemons() {
   };
 }
 
-async function arrangePokemonsData(): Promise<void> {
-  const { data } = await axios.get('http://192.168.15.22:3000/api/pokemons');
+async function arrangePokemonsData(url: string): Promise<void> {
+  const { data } = await axios.get(`${url}/pokemons`);
 
   pokemons.push(...data);
 }
 
-async function arrangeEvolutionsData(): Promise<void> {
-  const { data } = await axios.get('http://192.168.15.22:3000/api/evolutions');
+async function arrangeEvolutionsData(url: string): Promise<void> {
+  const { data } = await axios.get(`${url}/evolutions`);
 
   evolutions.push(...data);
 }
