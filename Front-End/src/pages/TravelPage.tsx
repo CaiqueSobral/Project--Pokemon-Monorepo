@@ -7,8 +7,9 @@ import PrimaryText from '../components/Custom/PrimaryText';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import TypesComponent from '../components/TravelPage/TypesComponent';
 import TravelButtons from '../components/TravelPage/TravelButtons';
-import { TravelPageScreenProps } from '@/routes/HomeNavigator';
+import { TravelPageScreenProps } from '../routes/HomeNavigator';
 import capitalize from '../helpers/helperFunctions';
+import { PokemonTypes } from '../interfaces/Pokemon';
 
 export default function TravelPage({ navigation }: TravelPageScreenProps) {
   const { habitats, pokemons } = useContext(PokemonsContext);
@@ -22,25 +23,25 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
         pokemon.habitat.toLowerCase() === pokemonsHabitats[index].name,
     )
     .map((pokemon) => {
-      return pokemon.types[0].type;
+      return pokemon.types[0];
     });
 
-  const getMostTypes = (types: Array<string>) => {
+  const getMostTypes = (types: Array<PokemonTypes>) => {
     return (
       types
         .sort(
           (a, b) =>
-            types.filter((v) => v === a).length -
-            types.filter((v) => v === b).length,
+            types.filter((v) => v.type === a.type).length -
+            types.filter((v) => v.type === b.type).length,
         )
-        .pop() || ''
+        .pop() || { type: '', color: '' }
     );
   };
 
   const mostType = getMostTypes(pokemonsTypes);
   const mostTypes = [
     mostType,
-    getMostTypes(pokemonsTypes.filter((e) => e != mostType)),
+    getMostTypes(pokemonsTypes.filter((e) => e.type != mostType.type)),
   ];
   const getSize = () => {
     return Dimensions.get('window').height * 0.35 >

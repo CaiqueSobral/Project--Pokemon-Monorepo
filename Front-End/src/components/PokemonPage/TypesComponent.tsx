@@ -2,11 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
-import { pokemonTypes } from '../../interfaces/Pokemon';
+import { PokemonTypes } from '../../interfaces/Pokemon';
 import capitalize from '../../helpers/helperFunctions';
 
 type Props = {
-  types: Array<pokemonTypes>;
+  types: Array<PokemonTypes>;
 };
 
 export default function TypesComponent(props: Props) {
