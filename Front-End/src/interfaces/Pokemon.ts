@@ -14,10 +14,10 @@ export interface PokemonInterface {
   captureRate: number;
   evolutionChainId: number;
   habitat: string;
-  types: Array<pokemonTypes>;
+  types: Array<PokemonTypes>;
 }
 
-export interface pokemonTypes {
+export interface PokemonTypes {
   type: string;
   color: string;
 }
