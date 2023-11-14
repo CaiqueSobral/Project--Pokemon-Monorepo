@@ -1,8 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import PrimaryButton from '../Custom/PrimaryButton';
-import { useNavigation } from '@react-navigation/native';
-import { TravelPageScreenProps } from '@/routes/HomeNavigator';
 
 type Props = {
   nextIndex: () => void;

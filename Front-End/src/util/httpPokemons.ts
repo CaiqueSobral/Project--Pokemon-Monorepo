@@ -8,7 +8,6 @@ import { getImage } from '../firebase/firebaseStorage';
 import { getWeatherData } from './httpWeather';
 import { WeatherInterface } from '../interfaces/Weather';
 import { habitatsLocations } from '../data/constants';
-import capitalize from '../helpers/helperFunctions';
 
 const query = `query getPokemonsGen1 {
   habitats: pokemon_v2_pokemonhabitat(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {

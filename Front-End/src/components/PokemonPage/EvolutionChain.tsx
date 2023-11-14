@@ -1,6 +1,6 @@
 import { PokemonsContext } from '../../data/context/pokemonsContext';
 import React, { useContext } from 'react';
-import { Dimensions, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import { EvolutionChainInterface } from '../../interfaces/Pokemon';
 

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Pressable } from 'react-native';
 import Animated, {
   useAnimatedStyle,

@@ -1,7 +1,5 @@
-import { FONTSTART2P } from '../../data/constants';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Image, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 
 export default function HomeHeader() {

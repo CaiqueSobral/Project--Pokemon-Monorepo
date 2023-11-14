@@ -1,15 +1,12 @@
-import { pokeballs } from '../../data/constants';
 import React, { useState } from 'react';
-import { Image, LayoutChangeEvent, View } from 'react-native';
+import { Image, View } from 'react-native';
 import Animated, {
   Easing,
   cancelAnimation,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withRepeat,
-  withSequence,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';

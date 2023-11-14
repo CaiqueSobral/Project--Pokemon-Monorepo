@@ -1,7 +1,5 @@
 import { FONTSTART2P } from '../../data/constants';
-import { NavigationScreensProps } from '@/routes/HomeNavigator';
-import { useNavigation } from '@react-navigation/native';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import DrawerButton from './DrawerButton';
 
 type Props = {
