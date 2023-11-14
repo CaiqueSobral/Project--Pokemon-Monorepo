@@ -9,16 +9,8 @@ import { getWeatherData } from './httpWeather';
 import { WeatherInterface } from '../interfaces/Weather';
 import { habitatsLocations } from '../data/constants';
 import capitalize from '../helpers/helperFunctions';
-import { Image } from 'react-native';
 
 const query = `query getPokemonsGen1 {
-  evolution_chain: pokemon_v2_evolutionchain(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {
-    id
-    species: pokemon_v2_pokemonspecies(where: {is_baby: {_eq: false}, pokemon_v2_generation: {id: {_eq: 1}}}) {
-      name
-      id
-    }
-  }
   habitats: pokemon_v2_pokemonhabitat(where: {pokemon_v2_pokemonspecies: {pokemon_v2_generation: {id: {_eq: 1}}}}) {
     name
     id
@@ -38,15 +30,15 @@ export async function getAllPokemons() {
   console.log('Getting Pokemons...');
   const {
     data: {
-      data: { evolution_chain, habitats },
+      data: { habitats },
     },
   } = await axios.post('https://beta.pokeapi.co/graphql/v1beta', {
     headers: headers,
     query: query,
   });
 
-  arrangePokemonsData();
-  arrangeEvolutionData(evolution_chain);
+  await arrangePokemonsData();
+  await arrangeEvolutionsData();
   await arrangeHabitatsData(habitats);
 
   console.log('Pokemons loaded!');
@@ -61,6 +53,12 @@ async function arrangePokemonsData(): Promise<void> {
   const { data } = await axios.get('http://192.168.15.22:3000/api/pokemons');
 
   pokemons.push(...data);
+}
+
+async function arrangeEvolutionsData(): Promise<void> {
+  const { data } = await axios.get('http://192.168.15.22:3000/api/evolutions');
+
+  evolutions.push(...data);
 }
 
 async function arrangeHabitatsData(habitatsData: any) {
@@ -92,32 +90,4 @@ async function getHabitatWeather(
   name: keyof typeof habitatsLocations,
 ): Promise<WeatherInterface> {
   return await getWeatherData(habitatsLocations[name]);
-}
-
-function arrangeEvolutionData(evolution_chain: any) {
-  type Specie = {
-    id: number;
-    name: string;
-    sprite: string;
-  };
-  try {
-    for (const item in evolution_chain) {
-      const evolutionData = evolution_chain[item];
-      const evolutionChain: EvolutionChainInterface = {
-        id: evolutionData.id,
-        species: evolutionData.species
-          .map((e: Specie) => {
-            return {
-              id: e.id,
-              name: capitalize(e.name),
-              sprite: `https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/${e.name}.png`,
-            };
-          })
-          .sort((a: Specie, b: Specie) => a.id - b.id),
-      };
-      evolutions.splice(evolutionChain.id, 0, evolutionChain);
-    }
-  } catch (e) {
-    console.log(e);
-  }
 }
