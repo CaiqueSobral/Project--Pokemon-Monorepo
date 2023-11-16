@@ -25,6 +25,8 @@ import MyPokemonsPage from '../pages/MyPokemonsPage';
 import ProfilePage from '../pages/ProfilePage';
 import ShopPage from '../pages/ShopPage';
 import ConfigPage from '../pages/ConfigPage';
+import { Image } from 'react-native';
+import PrimaryText from '../components/Custom/PrimaryText';
 
 type StackParamList = {
   LoginPage: undefined;
@@ -88,42 +90,49 @@ const screens = [
     style: FONTSTART2P,
     name: 'HomeDrawer' as keyof DrawerParamList,
     component: HomePage,
+    icon: require('../../assets/icons/drawer/home-icon.png'),
   },
   {
     title: 'Pokédex',
     style: FONTSTART2P,
     name: 'PokeDexDrawer' as keyof DrawerParamList,
     component: PokedexPage,
+    icon: require('../../assets/icons/drawer/pokedex-icon.png'),
   },
   {
     title: 'My Pokémons',
     style: FONTSTART2P,
     name: 'MyPokemonsDrawer' as keyof DrawerParamList,
     component: MyPokemonsPage,
+    icon: require('../../assets/icons/drawer/pokeball-icon.png'),
   },
   {
     title: 'Travel',
     style: FONTSTART2P,
     name: 'TravelDrawer' as keyof DrawerParamList,
     component: TravelPage,
+    icon: require('../../assets/icons/drawer/sign-icon.png'),
   },
   {
     title: 'Shop',
     style: FONTSTART2P,
     name: 'ShopDrawer' as keyof DrawerParamList,
     component: ShopPage,
+    icon: require('../../assets/icons/drawer/shop-icon.png'),
   },
   {
     title: 'Profile',
     style: FONTSTART2P,
     name: 'ProfileDrawer' as keyof DrawerParamList,
     component: ProfilePage,
+    icon: require('../../assets/icons/drawer/profile-icon.png'),
   },
   {
     title: 'Config',
     style: FONTSTART2P,
     name: 'ConfigDrawer' as keyof DrawerParamList,
     component: ConfigPage,
+    icon: require('../../assets/icons/drawer/config-icon.png'),
   },
 ];
 
@@ -133,7 +142,13 @@ function DrawerNavigator() {
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: false,
-        drawerLabelStyle: [FONTSTART2P, { paddingTop: 8 }],
+        drawerStyle: {
+          borderColor: 'black',
+          borderRightWidth: 4,
+          borderBottomWidth: 4,
+          borderTopWidth: 4,
+        },
+        drawerLabelStyle: [FONTSTART2P],
         drawerItemStyle: { marginLeft: 0, width: '100%' },
       }}
     >
@@ -143,7 +158,32 @@ function DrawerNavigator() {
             key={i}
             name={screen.name}
             component={screen.component}
-            options={{ title: screen.title, headerTitleStyle: FONTSTART2P }}
+            options={{
+              title: screen.title,
+              headerTitleStyle: FONTSTART2P,
+              drawerIcon: ({ focused }) => {
+                return (
+                  <Image
+                    source={screen.icon}
+                    style={[
+                      focused ? {} : { opacity: 0.5 },
+                      { height: 32, width: 32 },
+                    ]}
+                    resizeMode="contain"
+                    className="-mr-4"
+                  />
+                );
+              },
+              drawerLabel: ({ focused }) => {
+                return (
+                  <PrimaryText
+                    text={screen.title}
+                    style={[focused ? {} : { opacity: 0.5 }]}
+                    classname={`pt-[8]`}
+                  />
+                );
+              },
+            }}
           />
         );
       })}
