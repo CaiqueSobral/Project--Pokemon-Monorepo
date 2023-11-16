@@ -20,6 +20,11 @@ import { HabitatInterface, PokemonInterface } from '../interfaces/Pokemon';
 import PokemonDexPage from '../pages/PokemonDexPage';
 import TravelPage from '../pages/TravelPage';
 import HuntingPage from '../pages/HuntingPage';
+import CustomDrawer from '../components/Drawer/CustomDrawer';
+import MyPokemonsPage from '../pages/MyPokemonsPage';
+import ProfilePage from '../pages/ProfilePage';
+import ShopPage from '../pages/ShopPage';
+import ConfigPage from '../pages/ConfigPage';
 
 type StackParamList = {
   LoginPage: undefined;
@@ -34,6 +39,10 @@ type DrawerParamList = {
   HomeDrawer: NavigatorScreenParams<StackParamList>;
   PokeDexDrawer: undefined;
   TravelDrawer: undefined;
+  MyPokemonsDrawer: undefined;
+  ShopDrawer: undefined;
+  ProfileDrawer: undefined;
+  ConfigDrawer: undefined;
 };
 
 export type LoginPageScreenProps = NativeStackScreenProps<
@@ -73,20 +82,71 @@ export type NavigationScreensProps = CompositeScreenProps<
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
+const screens = [
+  {
+    title: 'Home',
+    style: FONTSTART2P,
+    name: 'HomeDrawer' as keyof DrawerParamList,
+    component: HomePage,
+  },
+  {
+    title: 'Pokédex',
+    style: FONTSTART2P,
+    name: 'PokeDexDrawer' as keyof DrawerParamList,
+    component: PokedexPage,
+  },
+  {
+    title: 'My Pokémons',
+    style: FONTSTART2P,
+    name: 'MyPokemonsDrawer' as keyof DrawerParamList,
+    component: MyPokemonsPage,
+  },
+  {
+    title: 'Travel',
+    style: FONTSTART2P,
+    name: 'TravelDrawer' as keyof DrawerParamList,
+    component: TravelPage,
+  },
+  {
+    title: 'Shop',
+    style: FONTSTART2P,
+    name: 'ShopDrawer' as keyof DrawerParamList,
+    component: ShopPage,
+  },
+  {
+    title: 'Profile',
+    style: FONTSTART2P,
+    name: 'ProfileDrawer' as keyof DrawerParamList,
+    component: ProfilePage,
+  },
+  {
+    title: 'Config',
+    style: FONTSTART2P,
+    name: 'ConfigDrawer' as keyof DrawerParamList,
+    component: ConfigPage,
+  },
+];
+
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator screenOptions={{ headerShown: false }}>
-      <Drawer.Screen name="HomeDrawer" component={HomePage} />
-      <Drawer.Screen
-        options={{ title: 'Pokédex', headerTitleStyle: FONTSTART2P }}
-        name="PokeDexDrawer"
-        component={PokedexPage}
-      />
-      <Drawer.Screen
-        options={{ title: 'Travel', headerTitleStyle: FONTSTART2P }}
-        name="TravelDrawer"
-        component={TravelPage}
-      />
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawer {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerLabelStyle: [FONTSTART2P, { paddingTop: 8 }],
+        drawerItemStyle: { marginLeft: 0, width: '100%' },
+      }}
+    >
+      {screens.map((screen, i) => {
+        return (
+          <Drawer.Screen
+            key={i}
+            name={screen.name}
+            component={screen.component}
+            options={{ title: screen.title, headerTitleStyle: FONTSTART2P }}
+          />
+        );
+      })}
     </Drawer.Navigator>
   );
 }
@@ -104,12 +164,10 @@ export default function HomeStackNavigator() {
     >
       <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
-      <Stack.Screen name="PokedexPage" component={PokedexPage}></Stack.Screen>
       <Stack.Screen
         name="PokemonDexPage"
         component={PokemonDexPage}
       ></Stack.Screen>
-      <Stack.Screen name="TravelPage" component={TravelPage}></Stack.Screen>
       <Stack.Screen name="HuntingPage" component={HuntingPage}></Stack.Screen>
     </Stack.Navigator>
   );
