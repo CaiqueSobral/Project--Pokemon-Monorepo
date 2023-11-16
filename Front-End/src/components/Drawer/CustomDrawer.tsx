@@ -8,10 +8,14 @@ import PrimaryText from '../Custom/PrimaryText';
 import { Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { pokeballs } from '../../data/constants';
+import CloseDrawerButton from './CloseDrawerButton';
 
 export default function CustomDrawer(props: any) {
   return (
     <SafeAreaView className="flex-1 px-3">
+      <View className="h-[5%] w-full mt-2">
+        <CloseDrawerButton />
+      </View>
       <View className="h-1/5 w-full border-b-2">
         <View className="h-3/4 aspect-square">
           <Image
