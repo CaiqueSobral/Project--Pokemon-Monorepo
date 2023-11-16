@@ -58,13 +58,13 @@ export async function getAllPokemons() {
 async function arrangePokemonsData(url: string): Promise<void> {
   const { data } = await axios.get(`${url}/pokemons`);
 
-  pokemons.push(...data);
+  pokemons.splice(0, pokemons.length, ...data);
 }
 
 async function arrangeEvolutionsData(url: string): Promise<void> {
   const { data } = await axios.get(`${url}/evolutions`);
 
-  evolutions.push(...data);
+  evolutions.splice(0, evolutions.length, ...data);
 }
 
 async function arrangeHabitatsData(habitatsData: any) {
