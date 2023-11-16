@@ -10,9 +10,7 @@ export default function HomeHeader() {
       </View>
       <View className="flex h-20 w-20 justify-center items-center rounded-full border border-black">
         <Image
-          source={{
-            uri: 'https://orig00.deviantart.net/a566/f/2013/287/3/e/ash__satoshi__in_pixels_by_otaku_trolls-d6qhtip.png',
-          }}
+          source={require('../../../assets/images/profile/male_pic.png')}
           resizeMode="contain"
           className="w-full h-full rounded-full"
         />
