@@ -3,14 +3,17 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import { Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { pokeballs } from '../../data/constants';
 import CloseDrawerButton from './CloseDrawerButton';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CustomDrawer(props: any) {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView className="flex-1 px-3">
       <View className="h-[5%] w-full mt-4">
@@ -45,8 +48,20 @@ export default function CustomDrawer(props: any) {
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <View className="mb-4 h-8 justify-center">
-        <PrimaryText text="Log out" classname="pt-[8]" />
+      <View className="mb-4 h-8 ml-2">
+        <TouchableOpacity
+          className="w-full h-full items-center flex-row"
+          onPress={() => navigation.goBack()}
+        >
+          <View className="h-[32] w-[32] mr-[12]">
+            <Image
+              source={require('../../../assets/icons/drawer/exit-icon.png')}
+              resizeMode="contain"
+              className="w-full h-full"
+            />
+          </View>
+          <PrimaryText text="Log out" classname="pt-[8]" />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
