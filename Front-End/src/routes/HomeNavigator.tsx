@@ -15,7 +15,7 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import LoginPage from '../pages/LoginPage';
+import FrontPage from '../pages/FrontPage';
 import { HabitatInterface, PokemonInterface } from '../interfaces/Pokemon';
 import PokemonDexPage from '../pages/PokemonDexPage';
 import TravelPage from '../pages/TravelPage';
@@ -28,8 +28,10 @@ import ConfigPage from '../pages/ConfigPage';
 import { Image } from 'react-native';
 import PrimaryText from '../components/Custom/PrimaryText';
 import MyBagPage from '../pages/MyBagPage';
+import LoginPage from '../pages/LoginPage';
 
 type StackParamList = {
+  FrontPage: undefined;
   LoginPage: undefined;
   HomePage: undefined;
   PokedexPage: undefined;
@@ -48,6 +50,11 @@ type DrawerParamList = {
   ProfileDrawer: undefined;
   ConfigDrawer: undefined;
 };
+
+export type FrontPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'FrontPage'
+>;
 
 export type LoginPageScreenProps = NativeStackScreenProps<
   StackParamList,
@@ -209,8 +216,9 @@ export default function HomeStackNavigator() {
         headerShown: false,
         animation: 'slide_from_right',
       }}
-      initialRouteName="LoginPage"
+      initialRouteName="FrontPage"
     >
+      <Stack.Screen name="FrontPage" component={FrontPage}></Stack.Screen>
       <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen
