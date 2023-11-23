@@ -27,6 +27,7 @@ import ShopPage from '../pages/ShopPage';
 import ConfigPage from '../pages/ConfigPage';
 import { Image } from 'react-native';
 import PrimaryText from '../components/Custom/PrimaryText';
+import MyBagPage from '../pages/MyBagPage';
 
 type StackParamList = {
   LoginPage: undefined;
@@ -42,6 +43,7 @@ type DrawerParamList = {
   PokeDexDrawer: undefined;
   TravelDrawer: undefined;
   MyPokemonsDrawer: undefined;
+  MyBagDrawer: undefined;
   ShopDrawer: undefined;
   ProfileDrawer: undefined;
   ConfigDrawer: undefined;
@@ -107,6 +109,13 @@ const screens = [
     icon: require('../../assets/icons/drawer/pokeball-icon.png'),
   },
   {
+    title: 'My Bag',
+    style: FONTSTART2P,
+    name: 'MyBagDrawer' as keyof DrawerParamList,
+    component: MyBagPage,
+    icon: require('../../assets/icons/drawer/bag-icon.png'),
+  },
+  {
     title: 'Travel',
     style: FONTSTART2P,
     name: 'TravelDrawer' as keyof DrawerParamList,
@@ -170,7 +179,7 @@ function DrawerNavigator() {
                       { height: 32, width: 32 },
                     ]}
                     resizeMode="contain"
-                    className="-mr-4"
+                    className="-mr-[24]"
                   />
                 );
               },
