@@ -10,9 +10,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { pokeballs } from '../../data/constants';
 import CloseDrawerButton from './CloseDrawerButton';
 import { useNavigation } from '@react-navigation/native';
+import { HomePageScreenProps } from '../../routes/HomeNavigator';
 
 export default function CustomDrawer(props: any) {
-  const navigation = useNavigation();
+  const { navigation } = useNavigation<HomePageScreenProps>();
 
   return (
     <SafeAreaView className="flex-1 px-3">
@@ -51,7 +52,7 @@ export default function CustomDrawer(props: any) {
       <View className="mb-4 h-8 ml-2">
         <TouchableOpacity
           className="w-full h-full items-center flex-row"
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('FrontPage')}
         >
           <View className="h-[32] w-[32] mr-[12]">
             <Image
