@@ -16,7 +16,7 @@ export default function PrimaryTextInput(props: Props) {
   };
 
   return (
-    <View className="w-11/12 h-full justify-center bg-white">
+    <View className="w-11/12 h-10 justify-center self-center bg-white">
       <TextInput
         secureTextEntry={props.password}
         style={[FONTSTART2P]}
