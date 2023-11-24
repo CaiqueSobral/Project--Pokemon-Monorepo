@@ -28,7 +28,7 @@ const pokemonsHabitats: Array<HabitatInterface> = [];
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
 
-  const url = 'http://192.168.15.22:3000/api';
+  const url = 'http://192.168.15.22:3001/api';
 
   const {
     data: {
@@ -44,7 +44,7 @@ export async function getAllPokemons() {
     arrangeEvolutionsData(url),
     arrangeHabitatsData(habitats),
   ]).catch((e) => {
-    throw new Error('Internal server error\n' + e);
+    throw new Error('Internal server error');
   });
 
   console.log('Pokemons loaded!');
