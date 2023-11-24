@@ -29,8 +29,6 @@ export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
     );
   };
 
-  console.log(isEmptyStrings());
-
   const offset = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
