@@ -29,10 +29,14 @@ import { Image } from 'react-native';
 import PrimaryText from '../components/Custom/PrimaryText';
 import MyBagPage from '../pages/MyBagPage';
 import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import ChooseStartPage from '../pages/ChooseStarterPage';
 
 type StackParamList = {
   FrontPage: undefined;
   LoginPage: undefined;
+  RegisterPage: undefined;
+  ChooseStarterPage: undefined;
   HomePage: undefined;
   PokedexPage: undefined;
   PokemonDexPage: { pokemon: PokemonInterface };
@@ -59,6 +63,16 @@ export type FrontPageScreenProps = NativeStackScreenProps<
 export type LoginPageScreenProps = NativeStackScreenProps<
   StackParamList,
   'LoginPage'
+>;
+
+export type RegisterPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'RegisterPage'
+>;
+
+export type ChooseStarterPageScreenProps = NativeStackScreenProps<
+  StackParamList,
+  'ChooseStarterPage'
 >;
 
 export type HomePageScreenProps = NativeStackScreenProps<
@@ -220,6 +234,11 @@ export default function HomeStackNavigator() {
     >
       <Stack.Screen name="FrontPage" component={FrontPage}></Stack.Screen>
       <Stack.Screen name="LoginPage" component={LoginPage}></Stack.Screen>
+      <Stack.Screen name="RegisterPage" component={RegisterPage}></Stack.Screen>
+      <Stack.Screen
+        name="ChooseStarterPage"
+        component={ChooseStartPage}
+      ></Stack.Screen>
       <Stack.Screen name="HomePage" component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen
         name="PokemonDexPage"
