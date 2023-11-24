@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Image, TextInput, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { WeatherContext } from '../data/context/weatherContext';
 import * as Location from 'expo-location';
@@ -8,8 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LoadingModal from '../components/Custom/LoadingModal';
 import { LoginPageScreenProps } from '@/routes/HomeNavigator';
 import PrimaryTextInput from '../components/Custom/PrimaryTextInput';
-import PrimaryText from '../components/Custom/PrimaryText';
-import BackButton from '../components/Header/BackButton';
+import BackHeader from '../components/Header/BackHeader';
 
 export default function LoginPage({ navigation }: LoginPageScreenProps) {
   const [modalActive, setModalActive] = useState(false);
@@ -52,9 +51,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
     <>
       {modalActive && <LoadingModal />}
       <SafeAreaView className="flex-1 p-4 bg-white">
-        <View className="h-[5%] w-[90%] mt-8 justify-center items-center">
-          <BackButton navigation={navigation.goBack} />
-        </View>
+        <BackHeader />
         <View className="flex-1">
           <Image
             source={require('../../assets/home/login-image.png')}

@@ -4,12 +4,10 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
+import { useNavigation } from '@react-navigation/native';
 
-type Props = {
-  navigation: () => void;
-};
-
-export default function BackButton(props: Props) {
+export default function BackButton() {
+  const navigation = useNavigation();
   const bgActive = useSharedValue(0);
 
   const rightShadowAnim = useAnimatedStyle(() => {
@@ -27,7 +25,7 @@ export default function BackButton(props: Props) {
   return (
     <Pressable
       className="absolute justify-self-center left-[5%]"
-      onPress={props.navigation}
+      onPress={() => navigation.goBack()}
       onPressIn={() => (bgActive.value = 1)}
       onPressOut={() => (bgActive.value = 0)}
     >

@@ -30,7 +30,10 @@ export default function FrontPage({ navigation }: FrontPageScreenProps) {
           />
         </View>
         <View className="h-[30%] items-center w-full">
-          <PrimaryButton text="Register" />
+          <PrimaryButton
+            text="Register"
+            onPress={() => navigation.navigate('RegisterPage')}
+          />
         </View>
         <View className="absolute h-[256] w-full items-center bottom-[60%]">
           <Carousel

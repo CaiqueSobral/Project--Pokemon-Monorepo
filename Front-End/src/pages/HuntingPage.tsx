@@ -1,7 +1,6 @@
 import { HuntingPageScreenProps } from '@/routes/HomeNavigator';
 import React, { useContext, useState } from 'react';
 import { Dimensions, Pressable, View, Image } from 'react-native';
-import BackButton from '../components/Header/BackButton';
 import PrimaryText from '../components/Custom/PrimaryText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TravelingAnimation from '../components/HuntingPage/HuntingAnimation';
@@ -18,8 +17,9 @@ import Animated, {
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import capitalize from '../helpers/helperFunctions';
 import TryingToCatchPokemon from '../components/HuntingPage/TryingToCatchPokemonComponent';
+import BackHeader from '../components/Header/BackHeader';
+import capitalize from '../helpers/helperFunctions';
 
 function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   const randomId = Math.floor(Math.random() * pokemons.length);
@@ -36,7 +36,7 @@ export default function HuntingPage({
     return { opacity: imageOpacity.value };
   });
   const resetOpacity = () => {
-    imageOpacity.value = 100; //withSpring(100, { mass: 1, damping: 25 });
+    imageOpacity.value = 100;
   };
 
   const habitat = route.params.habitat;
@@ -133,13 +133,7 @@ export default function HuntingPage({
       className="flex-1 items-center"
       style={{ backgroundColor: getColor() }}
     >
-      <View className="h-[5%] w-[90%] mt-8 justify-center items-center">
-        <BackButton navigation={navigation.goBack} />
-        <PrimaryText
-          classname="text-lg px-4 pt-[12] text-center"
-          text={capitalize(habitat.name)}
-        ></PrimaryText>
-      </View>
+      <BackHeader title={capitalize(habitat.name)} />
       <View
         className="mt-6 border-4 bg-gray-100"
         style={{ width: size, height: size }}

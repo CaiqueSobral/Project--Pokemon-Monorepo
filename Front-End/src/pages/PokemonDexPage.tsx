@@ -11,6 +11,7 @@ import MassComponent from '../components/PokemonPage/MassComponent';
 import PokemonPicture from '../components/PokemonPage/PokemonPictureComponent';
 import EvolutionChain from '../components/PokemonPage/EvolutionChain';
 import HabitatComponent from '../components/PokemonPage/HabitatComponent';
+import BackHeader from '../components/Header/BackHeader';
 
 export default function PokemonDexPage({
   navigation,
@@ -35,13 +36,7 @@ export default function PokemonDexPage({
   return (
     <LinearGradient className="flex-1" colors={getColors()}>
       <SafeAreaView className="flex-1 items-center justify-center">
-        <View className="h-[5%] w-[90%] mt-8 justify-center items-center">
-          <BackButton navigation={navigation.goBack} />
-          <PrimaryText
-            classname="text-lg px-4 pt-[12] text-center"
-            text={pokemon.name}
-          ></PrimaryText>
-        </View>
+        <BackHeader title={pokemon.name} />
         <PokemonPicture sprite={pokemon.sprite3d} colors={getColors()} />
         <View className="flex-1 w-[85%] my-8 bg-white">
           <ContainerWithRoundedBorders>
