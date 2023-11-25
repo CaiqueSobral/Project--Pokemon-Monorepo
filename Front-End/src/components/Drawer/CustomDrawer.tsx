@@ -2,7 +2,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import React from 'react';
+import React, { useContext } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import { Image } from 'react-native';
@@ -10,9 +10,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { pokeballs } from '../../data/constants';
 import CloseDrawerButton from './CloseDrawerButton';
 import { useNavigation } from '@react-navigation/native';
+import { logOutUser } from '../../firebase/firebaseAuth';
+import { UserContext } from '../../data/context/userContext';
 
 export default function CustomDrawer(props: any) {
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
+
+  const logOut = async () => {
+    try {
+      await logOutUser();
+      navigation.navigate('LoginPage' as never);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 px-3">
@@ -29,7 +41,7 @@ export default function CustomDrawer(props: any) {
         </View>
         <View className="w-full flex-row pt-2 mt-4 border-b-2">
           <View className="flex-1 items-start justify-end">
-            <PrimaryText text={`₽ 500`} />
+            <PrimaryText text={`₽ ${user.wallet}`} />
           </View>
           <View className="flex-1 flex-row justify-end">
             <View className="h-[32] w-[32]">
@@ -40,7 +52,7 @@ export default function CustomDrawer(props: any) {
               />
             </View>
             <View className="flex justify-end">
-              <PrimaryText text={`12`} />
+              <PrimaryText text={'' + user.caughtPokemons.length} />
             </View>
           </View>
         </View>
