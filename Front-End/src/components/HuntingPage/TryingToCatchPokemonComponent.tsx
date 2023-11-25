@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, View } from 'react-native';
 import Animated, {
   runOnJS,
@@ -10,27 +10,41 @@ import Animated, {
 } from 'react-native-reanimated';
 import Custom8BitRoundedBorders from '../Custom/Custom8BitRoundedBorders';
 import PrimaryText from '../Custom/PrimaryText';
+import { addCaughtPokemon, addSeenPokemon } from '../../firebase/firebaseStore';
+import { UserContext } from '../../data/context/userContext';
+import { PokemonInterface } from '../../interfaces/Pokemon';
 
 type Props = {
-  pokemon: string;
+  pokemon: PokemonInterface;
   gotPokemon: boolean;
   usedPokeball: string;
   size: number;
   bg: string;
 };
 export default function TryingToCatchPokemon(props: Props) {
+  const user = useContext(UserContext);
+
   const pokeballRotation = useSharedValue(1);
   const pokeballGotchaAnimation = useSharedValue(0);
   const [gotchaMessage, setGotchaMessage] = useState<string>('null');
   const [gotcha, setGotcha] = useState<boolean | null>(null);
 
+  const updateUser = async (pokemonId: number) => {
+    if (props.gotPokemon) await addCaughtPokemon(user.user, pokemonId);
+    await addSeenPokemon(user.user, pokemonId);
+  };
+
   const showGotcha = () => {
     setTimeout(
-      () => {
+      async () => {
         setGotchaMessage(
-          props.gotPokemon ? 'GOTCHA!!!' : `${props.pokemon} got away!`,
+          props.gotPokemon
+            ? 'GOTCHA!!!\nYou won ₽ 100.'
+            : `${props.pokemon.name} got away!`,
         );
         setGotcha(props.gotPokemon);
+        await updateUser(props.pokemon.id);
+        await user.getData(user.user.id);
       },
       props.gotPokemon ? 0 : 500,
     );
@@ -103,7 +117,10 @@ export default function TryingToCatchPokemon(props: Props) {
         </View>
         {gotcha != null && (
           <View className="w-3/4 h-1/6 absolute top-[15%] bg-white opacity-70 border-4 items-center justify-center">
-            <PrimaryText text={gotchaMessage} classname="pt-[8] text-xs" />
+            <PrimaryText
+              text={gotchaMessage}
+              classname="pt-[8] text-xs w-full text-center"
+            />
             <Custom8BitRoundedBorders />
           </View>
         )}

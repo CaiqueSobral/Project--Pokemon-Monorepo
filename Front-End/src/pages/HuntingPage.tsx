@@ -20,6 +20,8 @@ import Animated, {
 import TryingToCatchPokemon from '../components/HuntingPage/TryingToCatchPokemonComponent';
 import BackHeader from '../components/Header/BackHeader';
 import capitalize from '../helpers/helperFunctions';
+import { addSeenPokemon } from '../firebase/firebaseStore';
+import { UserContext } from '../data/context/userContext';
 
 function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   const randomId = Math.floor(Math.random() * pokemons.length);
@@ -38,6 +40,8 @@ export default function HuntingPage({
   const resetOpacity = () => {
     imageOpacity.value = 100;
   };
+
+  const { user } = useContext(UserContext);
 
   const habitat = route.params.habitat;
   const { pokemons } = useContext(PokemonsContext);
@@ -101,7 +105,8 @@ export default function HuntingPage({
     );
   }
 
-  const releasePokemon = () => {
+  const releasePokemon = async () => {
+    if (foundPokemon) await addSeenPokemon(user, foundPokemon.id);
     startAnimation(() => {
       setFoundPokemon(null);
       setStatusTrainer('Looking');
@@ -123,7 +128,7 @@ export default function HuntingPage({
         setStatusTrainer('Trying to Catch');
         setTimeout(() => {
           releasePokemon();
-        }, 6000);
+        }, 6500);
       });
     }, 1000);
   };
@@ -168,7 +173,7 @@ export default function HuntingPage({
             style={[animatedFoundOpacityStyle]}
           >
             <TryingToCatchPokemon
-              pokemon={foundPokemon.name}
+              pokemon={foundPokemon}
               gotPokemon={isPokemonCaught(foundPokemon)}
               usedPokeball={pokeballs[selectedPokeball].sprite}
               size={size}
