@@ -12,6 +12,9 @@ import Animated, {
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
+import CustomModal from '../components/Custom/CustomModal';
+import { createUser } from '../firebase/firebaseAuth';
+import { createUserStore } from '../firebase/firebaseStore';
 
 export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
   const [name, setName] = useState<string>('');
@@ -19,14 +22,35 @@ export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
   const [pass, setPass] = useState<string>('');
   const [selection, setSelection] = useState<0 | 1>(0);
   const [confirmPass, setConfirmPass] = useState<string>('');
+  const [showModal, setShowModal] = useState<{ show: boolean; text: string }>({
+    show: false,
+    text: '',
+  });
 
   const isEmptyStrings = (): boolean => {
-    return (
+    if (
       !name.replaceAll(' ', '') ||
       !email.replaceAll(' ', '') ||
       !pass.replaceAll(' ', '') ||
       !confirmPass.replaceAll(' ', '')
-    );
+    ) {
+      setShowModal({ show: true, text: 'All fields are needed.' });
+      return false;
+    }
+
+    return true;
+  };
+
+  const checkPass = (): boolean => {
+    if (pass !== confirmPass) {
+      setShowModal({ show: true, text: 'Your passwords must match.' });
+      return false;
+    }
+    return true;
+  };
+
+  const hideModal = () => {
+    setShowModal({ show: false, text: '' });
   };
 
   const offset = useSharedValue(0);
@@ -69,60 +93,84 @@ export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
     );
   };
 
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-      <BackHeader title="Be a Trainer" />
-      <View className="flex-1 items-center mt-4">
-        {renderLabel('Name', name, setName)}
-        {renderLabel('E-mail', email, setEmail)}
-        {renderLabel('Password', pass, setPass, true)}
-        {renderLabel('Confirm Password', confirmPass, setConfirmPass, true)}
-        <View className="h-12 w-[90%] mt-2">
-          <PrimaryText text="Your Char: " classname="pt-[8]" />
-        </View>
-        <View className="flex-1 w-[90%] flex-row">
-          {images.map((_, i) => {
-            return (
-              <View className="flex-1" key={i}>
-                <View className="h-12 w-full items-center justify-center">
-                  {selection === i && (
-                    <Animated.Image
-                      source={require('../../assets/icons/selection-icon.png')}
-                      resizeMode="contain"
-                      className="h-12 w-12"
-                      style={animatedStyle}
-                    />
-                  )}
-                </View>
-                <Pressable
-                  className="flex-1 justify-center"
-                  onPress={() => setSelection(i as 1 | 0)}
-                >
-                  <Image
-                    source={
-                      i === 0
-                        ? require('../../assets/images/profile/female-high.png')
-                        : require('../../assets/images/profile/male-high.png')
-                    }
-                    resizeMode="contain"
-                    className="w-full h-full"
-                    style={selection !== i && { opacity: 0.4 }}
-                  />
-                </Pressable>
-              </View>
-            );
-          })}
-        </View>
-      </View>
+  const confirmRegistration = async () => {
+    try {
+      const { user } = await createUser(email, pass);
+      await createUserStore(
+        user.uid,
+        name,
+        email,
+        selection === 0 ? 'female' : 'male',
+      );
+      setShowModal({ show: true, text: 'User created' });
+      setTimeout(() => {
+        navigation.navigate('FrontPage');
+      }, 1500);
+    } catch (e) {
+      setShowModal({ show: true, text: '' + e });
+      return;
+    }
+  };
 
-      <View className="h-12 my-6 items-center w-full">
-        <PrimaryButton
-          text="Next >"
-          onPress={() =>
-            !isEmptyStrings() && navigation.navigate('ChooseStarterPage')
-          }
-        />
-      </View>
-    </SafeAreaView>
+  return (
+    <>
+      {showModal.show && (
+        <CustomModal text={showModal.text} onPress={hideModal} />
+      )}
+      <SafeAreaView className="flex-1 bg-white">
+        <BackHeader title="Be a Trainer" />
+        <View className="flex-1 items-center mt-4">
+          {renderLabel('Name', name, setName)}
+          {renderLabel('E-mail', email, setEmail)}
+          {renderLabel('Password', pass, setPass, true)}
+          {renderLabel('Confirm Password', confirmPass, setConfirmPass, true)}
+          <View className="h-12 w-[90%] mt-2">
+            <PrimaryText text="Your Char: " classname="pt-[8]" />
+          </View>
+          <View className="flex-1 w-[90%] flex-row">
+            {images.map((_, i) => {
+              return (
+                <View className="flex-1" key={i}>
+                  <View className="h-12 w-full items-center justify-center">
+                    {selection === i && (
+                      <Animated.Image
+                        source={require('../../assets/icons/selection-icon.png')}
+                        resizeMode="contain"
+                        className="h-12 w-12"
+                        style={animatedStyle}
+                      />
+                    )}
+                  </View>
+                  <Pressable
+                    className="flex-1 justify-center"
+                    onPress={() => setSelection(i as 1 | 0)}
+                  >
+                    <Image
+                      source={
+                        i === 0
+                          ? require('../../assets/images/profile/female-high.png')
+                          : require('../../assets/images/profile/male-high.png')
+                      }
+                      resizeMode="contain"
+                      className="w-full h-full"
+                      style={selection !== i && { opacity: 0.4 }}
+                    />
+                  </Pressable>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+
+        <View className="h-12 my-6 items-center w-full">
+          <PrimaryButton
+            text="Next >"
+            onPress={() =>
+              isEmptyStrings() && checkPass() && confirmRegistration()
+            }
+          />
+        </View>
+      </SafeAreaView>
+    </>
   );
 }
