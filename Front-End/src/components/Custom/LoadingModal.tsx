@@ -6,8 +6,11 @@ import Custom8BitRoundedBorders from './Custom8BitRoundedBorders';
 export default function LoadingModal() {
   return (
     <Modal animationType="fade" transparent={true}>
-      <View className="flex-1 justify-center items-center bg-[#cccccc40]">
-        <View className="h-[256] w-[256] bg-[#ffffff] justify-center border-4 border-black opacity-90">
+      <View
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
+      >
+        <View className="h-1/5 w-3/4 bg-white justify-center border-4 border-black">
           <PrimaryText text="Loading" classname="w-full text-center" />
           <Custom8BitRoundedBorders />
         </View>
