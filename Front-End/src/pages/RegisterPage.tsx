@@ -65,7 +65,9 @@ export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
       -1,
       true,
     );
-  }, [offset.value]);
+
+    return () => {};
+  }, []);
 
   const images = [
     '../../assets/images/profile/female-high.png',

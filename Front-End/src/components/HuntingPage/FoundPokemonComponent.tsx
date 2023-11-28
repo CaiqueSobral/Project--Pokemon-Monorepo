@@ -70,6 +70,8 @@ export default function PokemonPicture(props: Props) {
       150,
       withSpring(-(props.size / 1.25 - props.size), { mass: 1, damping: 50 }),
     );
+
+    return () => {};
   });
 
   if (props.captureTry) {
