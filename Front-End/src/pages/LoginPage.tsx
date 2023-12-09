@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, KeyboardAvoidingView, View } from 'react-native';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { WeatherContext } from '../data/context/weatherContext';
 import * as Location from 'expo-location';
@@ -80,7 +80,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
             className="h-full w-full"
           />
         </View>
-        <View className="flex justify-end items-center h-[30%] w-full space-y-8">
+        <KeyboardAvoidingView className="flex justify-end items-center h-[30%] w-full space-y-8">
           <View className="w-full space-y-4">
             <View className="w-full h-10 items-center">
               <PrimaryTextInput
@@ -101,7 +101,7 @@ export default function LoginPage({ navigation }: LoginPageScreenProps) {
           <View className="h-[30%] items-center w-full">
             <PrimaryButton text="Login" onPress={tryLogin} />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </>
   );
