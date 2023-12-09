@@ -8,13 +8,8 @@ type Props = {
 };
 export default function PrimaryText(props: Props) {
   return (
-    <View pointerEvents="none">
-      <Text
-        style={[FONTSTART2P, props.style]}
-        className={` ${props.classname} `}
-      >
-        {props.text}
-      </Text>
-    </View>
+    <Text style={[FONTSTART2P, props.style]} className={` ${props.classname} `}>
+      {props.text}
+    </Text>
   );
 }

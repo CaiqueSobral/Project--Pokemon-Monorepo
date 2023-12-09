@@ -28,6 +28,15 @@ export default function TravelingAnimation(props: Props) {
     <Pressable className="flex-1 w-[90%] justify-center items-center mt-4">
       <View style={{ width: size, height: size }}>
         <ContainerWithRoundedBorders>
+          <Image
+            source={
+              isDay
+                ? require('../../../assets/images/sky/day_sky.png')
+                : require('../../../assets/images/sky/night_sky.png')
+            }
+            resizeMode="cover"
+            className="absolute w-full h-full -z-50"
+          />
           <Carousel
             width={size - 8}
             data={props.images}
@@ -64,15 +73,6 @@ export default function TravelingAnimation(props: Props) {
               source={require('../../../assets/images/walking.gif')}
               resizeMode="cover"
               className="w-full h-full"
-            />
-            <Image
-              source={
-                isDay
-                  ? require('../../../assets/images/sky/day_sky.png')
-                  : require('../../../assets/images/sky/night_sky.png')
-              }
-              resizeMode="cover"
-              className="absolute w-full h-full -z-50"
             />
           </View>
         </ContainerWithRoundedBorders>

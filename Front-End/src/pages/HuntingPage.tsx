@@ -115,7 +115,7 @@ export default function HuntingPage({
 
   const isPokemonCaught = (pokemon: PokemonInterface) => {
     const number =
-      Math.floor(Math.random() * 250 + 1) -
+      Math.floor(Math.random() * 254 + 1) -
       pokeballs[selectedPokeball].modifier;
     return number <= pokemon.captureRate;
   };

@@ -13,10 +13,12 @@ export default function BackHeader(props: Props) {
       <BackButton />
 
       {props.title && (
-        <PrimaryText
-          text={props.title}
-          classname="pt-[8] text-center w-full text-base"
-        />
+        <View pointerEvents="none">
+          <PrimaryText
+            text={props.title}
+            classname="pt-[8] text-center w-full text-base"
+          />
+        </View>
       )}
     </View>
   );
