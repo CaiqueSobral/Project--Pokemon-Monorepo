@@ -28,7 +28,9 @@ const pokemonsHabitats: Array<HabitatInterface> = [];
 export async function getAllPokemons() {
   console.log('Getting Pokemons...');
 
-  const url = 'http://192.168.15.22:3001/api';
+  const url = process.env.ENV_TEST
+    ? 'http://192.168.15.22:3001/api'
+    : 'https://project-pokemon-monorepo-production.up.railway.app/api';
 
   const {
     data: {

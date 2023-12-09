@@ -65,8 +65,6 @@ export default function RegisterPage({ navigation }: RegisterPageScreenProps) {
       -1,
       true,
     );
-
-    return () => {};
   }, []);
 
   const images = [
