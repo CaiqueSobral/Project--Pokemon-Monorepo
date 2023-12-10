@@ -4,10 +4,8 @@ import { registerRootComponent } from 'expo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import PokemonsContextProvider from './data/context/pokemonsContext';
 import RootNavigator from './routes';
 import { NavigationContainer } from '@react-navigation/native';
-import WeatherContextProvider from './data/context/weatherContext';
 import IndexContextProvider from './data/context/IndexContext';
 
 SplashScreen.preventAutoHideAsync();
