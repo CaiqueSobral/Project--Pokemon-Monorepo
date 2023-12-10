@@ -13,10 +13,7 @@ import EvolutionChain from '../components/PokemonPage/EvolutionChain';
 import HabitatComponent from '../components/PokemonPage/HabitatComponent';
 import BackHeader from '../components/Header/BackHeader';
 
-export default function PokemonDexPage({
-  navigation,
-  route,
-}: PokemonDexPageScreenProps) {
+export default function PokemonDexPage({ route }: PokemonDexPageScreenProps) {
   const pokemon = route.params.pokemon;
   const colors: string[] = [];
   const opacity: string = '95';

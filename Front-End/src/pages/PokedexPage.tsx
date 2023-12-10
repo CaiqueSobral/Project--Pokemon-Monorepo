@@ -7,7 +7,6 @@ import { NavigationScreensProps } from '@/routes/HomeNavigator';
 import Header from '../components/Header/Header';
 import { UserContext } from '../data/context/userContext';
 import { PokemonInterface } from '@/interfaces/Pokemon';
-import { UserInterface } from '../interfaces/User';
 
 export default function PokedexPage({ navigation }: NavigationScreensProps) {
   const pokemonsContext = useContext(PokemonsContext);
