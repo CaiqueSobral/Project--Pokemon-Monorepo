@@ -1,5 +1,3 @@
-import { WeatherInterface } from './Weather';
-
 export interface PokemonInterface {
   id: number;
   name: string;
