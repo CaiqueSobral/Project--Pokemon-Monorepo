@@ -4,7 +4,7 @@ import { Dimensions, Pressable, View, Image } from 'react-native';
 import PrimaryText from '../components/Custom/PrimaryText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TravelingAnimation from '../components/HuntingPage/HuntingAnimation';
-import { HabitatsColors, pokeballs } from '../data/constants';
+import { pokeballs } from '../data/constants';
 import Custom8BitRoundedBorders from '../components/Custom/Custom8BitRoundedBorders';
 import { PokemonsContext } from '../data/context/pokemonsContext';
 import { PokemonInterface } from '../interfaces/Pokemon';
@@ -29,10 +29,7 @@ function getRandomPokemon(pokemons: Array<PokemonInterface>) {
   return pokemonsRand;
 }
 
-export default function HuntingPage({
-  route,
-  navigation,
-}: HuntingPageScreenProps) {
+export default function HuntingPage({ route }: HuntingPageScreenProps) {
   const imageOpacity = useSharedValue(100);
   const animatedFoundOpacityStyle = useAnimatedStyle(() => {
     return { opacity: imageOpacity.value };
@@ -64,13 +61,6 @@ export default function HuntingPage({
       : Dimensions.get('window').height * 0.45 - 8;
   };
   const size = Math.ceil(getSize());
-
-  const getColor = () => {
-    let key: keyof typeof HabitatsColors;
-    for (key in HabitatsColors) {
-      if (key === habitat.name.toLowerCase()) return HabitatsColors[key] + '90';
-    }
-  };
 
   const startAnimation = (runWhenFinished: () => void) => {
     imageOpacity.value = withRepeat(
@@ -136,7 +126,7 @@ export default function HuntingPage({
   return (
     <SafeAreaView
       className="flex-1 items-center"
-      style={{ backgroundColor: getColor() }}
+      style={{ backgroundColor: habitat.color + '90' }}
     >
       <BackHeader title={capitalize(habitat.name)} />
       <View

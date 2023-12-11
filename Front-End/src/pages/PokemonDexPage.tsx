@@ -50,7 +50,7 @@ export default function PokemonDexPage({ route }: PokemonDexPageScreenProps) {
                 />
               </View>
               <View className="flex-1 items-center">
-                <HabitatComponent habitat={pokemon.habitat} color={colors[0]} />
+                <HabitatComponent habitat={pokemon.habitat} />
               </View>
               <View className="flex-1">
                 <EvolutionChain

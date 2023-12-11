@@ -34,12 +34,20 @@ export interface EvolutionChainInterface {
 }
 
 export interface HabitatInterface {
+  id: number;
   name: string;
+  color: string;
   sprite: {
     main: string;
     ground: string;
     bg: string;
   };
-  id: number;
-  habitatWeather: WeatherInterface;
+  coords: {
+    lat: number;
+    lng: number;
+  };
+  habitatWeather: {
+    tempC: number;
+    icon: string;
+  };
 }

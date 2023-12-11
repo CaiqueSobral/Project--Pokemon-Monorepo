@@ -3,11 +3,9 @@ import { ImageBackground, View } from 'react-native';
 import PrimaryText from '../Custom/PrimaryText';
 import Custom8BitBorders from '../Custom/Custom8BitBorders';
 import { PokemonsContext } from '../../data/context/pokemonsContext';
-import { HabitatsColors } from '../../data/constants';
 
 type Props = {
   habitat: string;
-  color: string;
 };
 
 export default function HabitatComponent(props: Props) {
@@ -17,17 +15,8 @@ export default function HabitatComponent(props: Props) {
       ? habitats.filter(
           (habitat) =>
             habitat.name.toLowerCase() === props.habitat.toLowerCase(),
-        )[0].sprite
+        )[0]
       : null;
-
-  const getColor = () => {
-    let key: keyof typeof HabitatsColors;
-    for (key in HabitatsColors) {
-      if (key === props.habitat.toLowerCase()) {
-        return HabitatsColors[key];
-      }
-    }
-  };
 
   return (
     <View className="flex-1 w-[90%] justify-between -mb">
@@ -38,7 +27,7 @@ export default function HabitatComponent(props: Props) {
         >
           {actualHabitat && (
             <ImageBackground
-              source={{ uri: actualHabitat.main }}
+              source={{ uri: actualHabitat.sprite.main }}
               resizeMode="cover"
               className="absolute w-full h-full opacity-90"
             />
@@ -48,7 +37,9 @@ export default function HabitatComponent(props: Props) {
           )}
 
           <PrimaryText
-            style={{ backgroundColor: actualHabitat ? getColor() : '#aaa' }}
+            style={{
+              backgroundColor: actualHabitat ? actualHabitat.color : '#aaa',
+            }}
             text={`Habitat: ${actualHabitat ? props.habitat : '???'}`}
             classname="absolute top-0 left-0 text-[8px] pt-[4] text-white px-1 border-r border-b"
           />

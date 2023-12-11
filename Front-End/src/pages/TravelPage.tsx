@@ -129,15 +129,15 @@ export default function TravelPage({ navigation }: TravelPageScreenProps) {
                 <PrimaryText
                   classname="text-center text-lg mt-[12]"
                   text={
-                    pokemonsHabitats[index].habitatWeather.weather.tempC + 'ºC'
+                    Math.floor(pokemonsHabitats[index].habitatWeather.tempC) +
+                    'ºC'
                   }
                 />
               </View>
               <View className="flex-1 w-[75%]">
                 <Image
                   source={{
-                    uri: pokemonsHabitats[index].habitatWeather.weather
-                      .condition.icon,
+                    uri: pokemonsHabitats[index].habitatWeather.icon,
                   }}
                   resizeMode="contain"
                   className="h-full w-full"

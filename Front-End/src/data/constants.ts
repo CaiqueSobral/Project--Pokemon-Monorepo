@@ -41,25 +41,3 @@ export const pokeballs = [
     sprite: 'https://img.pokemondb.net/sprites/items/ultra-ball.png',
   },
 ];
-
-export const HabitatsColors = {
-  cave: '#5c4679',
-  forest: '#859415',
-  grassland: '#629f3d',
-  mountain: '#9b2520',
-  'rough-terrain': '#b59951',
-  sea: '#4f73c0',
-  urban: '#c7446c',
-  'waters-edge': '#592aca',
-};
-
-export const habitatsLocations = {
-  cave: [-10.5113, -40.3224],
-  forest: [-3.10719, -60.0261],
-  grassland: [-17.6557865, -57.432597],
-  mountain: [5.1315566, -60.7585488],
-  'rough-terrain': [-22.949259, -43.154576],
-  sea: [-12.974722, -38.476665],
-  urban: [-23.533773, -46.62529],
-  'waters-edge': [-27.2562314, -55.920111],
-};
